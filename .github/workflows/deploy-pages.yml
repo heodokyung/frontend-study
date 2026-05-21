@@ -15,9 +15,6 @@ concurrency:
   group: github-pages
   cancel-in-progress: true
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,8 +28,6 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: |
-            react/**/package-lock.json
 
       - name: Prepare static site
         run: |
@@ -56,6 +51,8 @@ jobs:
       - name: Build React projects
         env:
           CI: false
+          NODE_OPTIONS: --openssl-legacy-provider
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
         run: |
           build_project() {
             local project_dir="$1"
@@ -76,12 +73,34 @@ jobs:
 
             pushd "$project_dir"
 
-            if [ -f package-lock.json ]; then
-              npm ci
-            else
-              echo "::warning::$project_dir/package-lock.json 파일이 없어 npm install로 진행합니다. 가능하면 package-lock.json을 커밋해 주세요."
-              npm install
+            echo "Node version:"
+            node -v
+            echo "NPM version:"
+            npm -v
+
+            if [ "$project_dir" = "react/react-netflix" ]; then
+              node - <<'NODE'
+          const fs = require('fs')
+          const key = process.env.TMDB_API_KEY
+
+          if (!key) {
+            console.error('::error::TMDB_API_KEY secret이 설정되어 있지 않습니다. GitHub 저장소 Settings > Secrets and variables > Actions에서 TMDB_API_KEY를 추가해 주세요.')
+            process.exit(1)
+          }
+
+          fs.writeFileSync(
+            'src/apikey.ts',
+            `export const config = {
+            apikey: ${JSON.stringify(key)},
+          }
+          `
+          )
+          NODE
             fi
+
+            # 오래된 학습 프로젝트는 package.json과 package-lock.json이 맞지 않는 경우가 많습니다.
+            # npm ci는 lock 파일 불일치 시 바로 실패하므로, 미리보기 배포에서는 npm install로 의존성을 보정합니다.
+            npm install
 
             npm run build
 
@@ -103,10 +122,10 @@ jobs:
 
             echo "Copied $project_dir/$build_output -> $deploy_dir"
           }
-
-          build_project "react/react-movie-list"          
-          build_project "react/react-coin-list"
+          
+          build_project "react/react-movie-list"
           build_project "react/react-animation"
+          build_project "react/react-coin-list"
           build_project "react/react-lottery"
 
       - name: Configure GitHub Pages
