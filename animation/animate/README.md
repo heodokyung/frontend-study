@@ -9,7 +9,6 @@
 - [미리보기](https://heodokyung.github.io/frontend-study/animation/animate/)
 - [기본 재료 낙하 모션](./animate.html)
 - [마크업 기반 재료 낙하 모션](./animate2.html)
-- [이벤트 비주얼형 완성 모션](./animate3.html)
 
 ## 파일 구성
 
