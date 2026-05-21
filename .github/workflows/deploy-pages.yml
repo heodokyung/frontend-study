@@ -15,6 +15,9 @@ concurrency:
   group: github-pages
   cancel-in-progress: true
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,7 +32,7 @@ jobs:
           node-version: 20
           cache: npm
           cache-dependency-path: |
-            react/react-netflix/package-lock.json
+            react/**/package-lock.json
 
       - name: Prepare static site
         run: |
@@ -50,28 +53,62 @@ jobs:
 
           touch _site/.nojekyll
 
-      - name: Build React Netflix
-        working-directory: react/react-netflix
+      - name: Build React projects
         env:
           CI: false
         run: |
-          npm ci
-          npm run build
-          rm -rf ../../_site/react/react-netflix
-          mkdir -p ../../_site/react/react-netflix
-          cp -a build/. ../../_site/react/react-netflix/
+          build_project() {
+            local project_dir="$1"
+            local deploy_dir="_site/$project_dir"
 
-      # 다른 React/Vue/Svelte 프로젝트도 자동 빌드하고 싶다면 아래 형식으로 추가합니다.
-      # - name: Build React Movie List
-      #   working-directory: react/react-movie-list
-      #   env:
-      #     CI: false
-      #   run: |
-      #     npm ci
-      #     npm run build
-      #     rm -rf ../../_site/react/react-movie-list
-      #     mkdir -p ../../_site/react/react-movie-list
-      #     cp -a build/. ../../_site/react/react-movie-list/
+            echo "----------------------------------------"
+            echo "Build target: $project_dir"
+
+            if [ ! -d "$project_dir" ]; then
+              echo "::warning::$project_dir 폴더가 없어 빌드를 건너뜁니다."
+              return 0
+            fi
+
+            if [ ! -f "$project_dir/package.json" ]; then
+              echo "::warning::$project_dir/package.json 파일이 없어 빌드를 건너뜁니다."
+              return 0
+            fi
+
+            pushd "$project_dir"
+
+            if [ -f package-lock.json ]; then
+              npm ci
+            else
+              echo "::warning::$project_dir/package-lock.json 파일이 없어 npm install로 진행합니다. 가능하면 package-lock.json을 커밋해 주세요."
+              npm install
+            fi
+
+            npm run build
+
+            local build_output=""
+            if [ -d build ]; then
+              build_output="build"
+            elif [ -d dist ]; then
+              build_output="dist"
+            else
+              echo "::error::$project_dir 빌드 결과 폴더를 찾지 못했습니다. build 또는 dist 폴더가 필요합니다."
+              exit 1
+            fi
+
+            popd
+
+            rm -rf "$deploy_dir"
+            mkdir -p "$deploy_dir"
+            cp -a "$project_dir/$build_output/." "$deploy_dir/"
+
+            echo "Copied $project_dir/$build_output -> $deploy_dir"
+          }
+
+          build_project "react/react-netflix"
+          build_project "react/react-movie-list"
+          build_project "react/react-animation"
+          build_project "react/react-coin-list"
+          build_project "react/react-lottery"
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
