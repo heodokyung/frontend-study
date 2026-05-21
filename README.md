@@ -38,8 +38,8 @@
 
 | 폴더 | 설명 |
 |---|---|
-| [`animation/css-effect`](./animation/css-effect/), [`DEMO 바로가기`](https://heodokyung.github.io/frontend-study/animation/css-effect/) | 눈, 불꽃 같은 CSS/JavaScript 기반 시각 효과 |
-| [`animation/animate`](./animation/animate/)  [`DEMO 바로가기`](https://heodokyung.github.io/frontend-study/animation/animate/)| HTML 파일 중심의 기본 애니메이션 실습 |
+| [`animation/css-effect`](./animation/css-effect/), [`바로가기`](https://heodokyung.github.io/frontend-study/animation/css-effect/) | 눈, 불꽃 같은 CSS/JavaScript 기반 시각 효과 |
+| [`animation/animate`](./animation/animate/)  [`바로가기`](https://heodokyung.github.io/frontend-study/animation/animate/)| HTML 파일 중심의 기본 애니메이션 실습 |
 | [`animation/animate-css`](./animation/animate-css/) | `animate.css` 라이브러리 구조와 사용 방식 참고 |
 | [`animation/aos`](./animation/aos/) | 스크롤 애니메이션 라이브러리 AOS 구조 참고 |
 
@@ -47,9 +47,9 @@
 
 | 폴더 | 설명 |
 |---|---|
-| [`javascript/ai-prompt`](./javascript/ai-prompt/) | 목적에 맞는 AI 프롬프트로 변환하는 도구 |
-| [`javascript/dice-game`](./javascript/dice-game/) | 주사위 게임을 단계별로 만들며 DOM 조작과 이벤트를 적용 |
-| [`javascript/draw-paint-js`](./javascript/draw-paint-js/) | Canvas/DOM을 이옹하여 그림판을 구현 |
+| [`javascript/ai-prompt`](./javascript/ai-prompt/), [`바로가기`](https://heodokyung.github.io/frontend-study/javascript/ai-prompt/) | 목적에 맞는 AI 프롬프트로 변환하는 도구 |
+| [`javascript/dice-game`](./javascript/dice-game/), [`바로가기`](https://heodokyung.github.io/frontend-study/javascript/dice-game/) | 주사위 게임을 단계별로 만들며 DOM 조작과 이벤트를 적용 |
+| [`javascript/draw-paint-js`](./javascript/draw-paint-js/), [`바로가기`](https://heodokyung.github.io/frontend-study/javascript/draw-paint-js/) | Canvas/DOM을 이옹하여 그림판을 구현 |
 
 ### React
 
