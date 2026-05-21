@@ -57,7 +57,7 @@
 			"last 1 safari version"
 		]
 	},
-	"homepage": "https://heodokyung.github.io/react-netflix",
+	"homepage": "https://heodokyung.github.io/frontend-study/react/react-netflix/",
 	"devDependencies": {
 		"@types/lodash.uniqby": "^4.7.7",
 		"@types/react-helmet": "^6.1.5"
