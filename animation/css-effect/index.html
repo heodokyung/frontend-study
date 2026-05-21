@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Effect Preview</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #101827;
+      --surface: rgba(255, 255, 255, 0.08);
+      --surface-strong: rgba(255, 255, 255, 0.13);
+      --text: #f7fafc;
+      --muted: rgba(247, 250, 252, 0.7);
+      --line: rgba(255, 255, 255, 0.14);
+      --primary: #82d9ff;
+      --primary-strong: #4db8ff;
+      --accent: #ffbe75;
+      --radius: 24px;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--text);
+      font-family:
+        Pretendard,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(77, 184, 255, 0.26), transparent 28rem),
+        radial-gradient(circle at bottom right, rgba(255, 190, 117, 0.24), transparent 32rem),
+        linear-gradient(135deg, #101827 0%, #182333 48%, #0e1421 100%);
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 42px 0 48px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      padding: 7px 12px;
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 700;
+      background: rgba(130, 217, 255, 0.12);
+      border: 1px solid rgba(130, 217, 255, 0.2);
+      border-radius: 999px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 58px);
+      line-height: 1.04;
+      letter-spacing: -0.06em;
+    }
+
+    .lead {
+      max-width: 740px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.75;
+      word-break: keep-all;
+    }
+
+    .meta-card {
+      min-width: 220px;
+      padding: 20px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .meta-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .meta-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .panel,
+    .preview {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .panel {
+      position: sticky;
+      top: 24px;
+      padding: 18px;
+    }
+
+    .panel-title {
+      margin: 0 0 12px;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .effect-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .effect-button {
+      width: 100%;
+      padding: 15px 16px;
+      color: var(--text);
+      text-align: left;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .effect-button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(130, 217, 255, 0.32);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .effect-button[aria-pressed="true"] {
+      color: #102033;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-color: transparent;
+    }
+
+    .effect-button strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 15px;
+    }
+
+    .effect-button span {
+      display: block;
+      color: inherit;
+      opacity: 0.76;
+      font-size: 13px;
+      line-height: 1.5;
+      word-break: keep-all;
+    }
+
+    .hint {
+      margin: 16px 2px 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+      word-break: keep-all;
+    }
+
+    .preview {
+      overflow: hidden;
+    }
+
+    .preview-header {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .preview-title h2 {
+      margin: 0 0 4px;
+      font-size: 20px;
+      letter-spacing: -0.03em;
+    }
+
+    .preview-title p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      word-break: keep-all;
+    }
+
+    .preview-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .link-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 13px;
+      color: #102033;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border: 0;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .stage {
+      position: relative;
+      height: min(680px, 70vh);
+      min-height: 460px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.12), transparent 22rem),
+        linear-gradient(180deg, #1c3148 0%, #132033 55%, #0b1220 100%);
+    }
+
+    .demo-layer {
+      position: absolute;
+      inset: 0;
+      display: none;
+      overflow: hidden;
+    }
+
+    .demo-layer.is-active {
+      display: block;
+    }
+
+    .scene-copy {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 5;
+      width: min(520px, calc(100% - 40px));
+      transform: translate(-50%, -50%);
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .scene-copy span {
+      display: inline-flex;
+      margin-bottom: 12px;
+      padding: 7px 12px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 13px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+    }
+
+    .scene-copy h3 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 64px);
+      line-height: 1.04;
+      letter-spacing: -0.06em;
+    }
+
+    .scene-copy p {
+      margin: 16px auto 0;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 15px;
+      line-height: 1.7;
+      word-break: keep-all;
+    }
+
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      color: #fff;
+      opacity: 0.9;
+      animation-name: snowFall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      will-change: transform, opacity;
+      user-select: none;
+      pointer-events: none;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.65);
+    }
+
+    .snowflake.small {
+      font-size: 9px;
+      opacity: 0.62;
+    }
+
+    .snowflake.medium {
+      font-size: 14px;
+      opacity: 0.82;
+    }
+
+    .snowflake.large {
+      font-size: 21px;
+      opacity: 0.95;
+    }
+
+    @keyframes snowFall {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) translateX(var(--xmove, 0)) rotate(180deg);
+        opacity: 0;
+      }
+    }
+
+    #confettiCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .spark {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 120px;
+      height: 120px;
+      transform: translate(-50%, -50%);
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255, 226, 158, 0.48), rgba(255, 144, 77, 0.08) 54%, transparent 72%);
+      filter: blur(1px);
+      animation: sparkPulse 1.4s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes sparkPulse {
+      from {
+        transform: translate(-50%, -50%) scale(0.88);
+        opacity: 0.56;
+      }
+      to {
+        transform: translate(-50%, -50%) scale(1.22);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .hero,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        position: static;
+      }
+
+      .stage {
+        height: 560px;
+        min-height: 520px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        width: min(100% - 24px, 1180px);
+        padding-top: 24px;
+      }
+
+      .preview-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .preview-actions {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">CSS Effect Study</p>
+        <h1>작은 화면 효과를 바로 눌러보고 비교하기</h1>
+        <p class="lead">
+          눈 내림 효과와 캔버스 파티클 효과를 한 화면에서 확인할 수 있도록 정리했습니다.
+          버튼을 누르면 미리보기 영역에서 해당 효과가 바로 실행됩니다.
+        </p>
+      </div>
+      <aside class="meta-card" aria-label="문서 정보">
+        <strong>Preview Index</strong>
+        <span>CSS Animation / Canvas</span>
+        <span>효과 확인용 데모 화면</span>
+      </aside>
+    </header>
+
+    <section class="layout" aria-label="CSS 효과 미리보기">
+      <aside class="panel">
+        <h2 class="panel-title">효과 선택</h2>
+        <div class="effect-list" id="effectList"></div>
+        <p class="hint">
+          기존 예제 코드는 유지하되, 이 화면에서는 효과가 바로 보이도록 데모 영역을 따로 구성했습니다.
+          실제 프로젝트에 붙일 때는 필요한 CSS와 JavaScript만 분리해서 사용하면 됩니다.
+        </p>
+      </aside>
+
+      <section class="preview">
+        <div class="preview-header">
+          <div class="preview-title">
+            <h2 id="previewTitle">눈 내림 효과</h2>
+            <p id="previewDescription">작은 눈송이 요소를 여러 개 생성하고, 크기·속도·흔들림을 랜덤으로 적용한 효과입니다.</p>
+          </div>
+          <div class="preview-actions">
+            <button class="link-button" type="button" id="replayButton">다시 실행</button>
+          </div>
+        </div>
+        <div class="stage" id="stage">
+          <div class="demo-layer is-active" id="snowDemo">
+            <div class="scene-copy">
+              <span>Snow Effect</span>
+              <h3>겨울 이벤트에 어울리는 눈 내림</h3>
+              <p>배경 위에 얹는 장식 레이어로 사용하기 좋습니다. pointer-events를 막아 콘텐츠 클릭을 방해하지 않습니다.</p>
+            </div>
+          </div>
+          <div class="demo-layer" id="fireDemo">
+            <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+            <i class="spark" aria-hidden="true"></i>
+            <div class="scene-copy">
+              <span>Canvas Particle</span>
+              <h3>중앙에서 퍼지는 파티클 모션</h3>
+              <p>완료, 축하, 당첨 같은 순간에 짧게 보여주기 좋은 캔버스 기반 효과입니다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const effects = [
+      {
+        id: 'snow',
+        title: '눈 내림 효과',
+        description: '작은 눈송이 요소를 여러 개 생성하고, 크기·속도·흔들림을 랜덤으로 적용한 효과입니다.',
+      },
+      {
+        id: 'fire',
+        title: '캔버스 파티클 효과',
+        description: '중앙에서 파티클이 터진 뒤 아래로 흩어지는 캔버스 기반 모션입니다.',
+      },
+    ];
+
+    const effectList = document.querySelector('#effectList');
+    const previewTitle = document.querySelector('#previewTitle');
+    const previewDescription = document.querySelector('#previewDescription');
+    const replayButton = document.querySelector('#replayButton');
+    const snowDemo = document.querySelector('#snowDemo');
+    const fireDemo = document.querySelector('#fireDemo');
+    const canvas = document.querySelector('#confettiCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let currentEffect = 'snow';
+    let particles = [];
+    let animationFrameId = null;
+    let lastTime = 0;
+    let canvasStarted = false;
+
+    function createEffectButton(effect, index) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'effect-button';
+      button.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
+      button.innerHTML = `<strong>${effect.title}</strong><span>${effect.description}</span>`;
+      button.addEventListener('click', () => setEffect(effect, button));
+      effectList.appendChild(button);
+    }
+
+    function setEffect(effect, selectedButton) {
+      currentEffect = effect.id;
+      previewTitle.textContent = effect.title;
+      previewDescription.textContent = effect.description;
+
+      snowDemo.classList.toggle('is-active', effect.id === 'snow');
+      fireDemo.classList.toggle('is-active', effect.id === 'fire');
+
+      document.querySelectorAll('.effect-button').forEach((button) => {
+        button.setAttribute('aria-pressed', button === selectedButton ? 'true' : 'false');
+      });
+
+      replayCurrentEffect();
+    }
+
+    function replayCurrentEffect() {
+      if (currentEffect === 'snow') {
+        createSnow();
+      } else {
+        resetCanvasParticles();
+      }
+    }
+
+    function createSnow() {
+      snowDemo.querySelectorAll('.snowflake').forEach((snowflake) => snowflake.remove());
+
+      const fragment = document.createDocumentFragment();
+      const snowCount = 48;
+
+      for (let i = 0; i < snowCount; i += 1) {
+        const snow = document.createElement('div');
+        const size = Math.random();
+        snow.className = 'snowflake';
+        snow.textContent = Math.random() > 0.18 ? '❄' : '•';
+        snow.style.left = `${Math.random() * 100}%`;
+        snow.style.top = `${-(Math.random() * 22 + 6)}vh`;
+        snow.style.animationDuration = `${7 + Math.random() * 9}s`;
+        snow.style.animationDelay = `${Math.random() * 4}s`;
+        snow.style.setProperty('--xmove', `${Math.random() * 120 - 60}px`);
+
+        if (size < 0.42) snow.classList.add('small');
+        else if (size < 0.82) snow.classList.add('medium');
+        else snow.classList.add('large');
+
+        fragment.appendChild(snow);
+      }
+
+      snowDemo.appendChild(fragment);
+    }
+
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      const ratio = window.devicePixelRatio || 1;
+      canvas.width = Math.floor(rect.width * ratio);
+      canvas.height = Math.floor(rect.height * ratio);
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    }
+
+    function resetCanvasParticles() {
+      resizeCanvas();
+      const rect = canvas.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      particles = Array.from({ length: 150 }, () => createParticle(centerX, centerY));
+
+      if (!canvasStarted) {
+        canvasStarted = true;
+        lastTime = performance.now();
+        animationFrameId = requestAnimationFrame(loopCanvas);
+      }
+    }
+
+    function createParticle(x, y) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 90 + Math.random() * 260;
+      const size = 4 + Math.random() * 7;
+      const colors = ['#82d9ff', '#ffbe75', '#fff1a8', '#ff8ab3', '#9cffc7'];
+
+      return {
+        x,
+        y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 120,
+        size,
+        rotation: Math.random() * Math.PI,
+        rotationSpeed: -5 + Math.random() * 10,
+        gravity: 280 + Math.random() * 120,
+        life: 1,
+        decay: 0.32 + Math.random() * 0.22,
+        color: colors[Math.floor(Math.random() * colors.length)],
+      };
+    }
+
+    function loopCanvas(now) {
+      const delta = Math.min((now - lastTime) / 1000, 0.033);
+      lastTime = now;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (currentEffect === 'fire') {
+        particles.forEach((particle) => {
+          particle.vy += particle.gravity * delta;
+          particle.x += particle.vx * delta;
+          particle.y += particle.vy * delta;
+          particle.rotation += particle.rotationSpeed * delta;
+          particle.life = Math.max(0, particle.life - particle.decay * delta);
+
+          ctx.save();
+          ctx.globalAlpha = particle.life;
+          ctx.translate(particle.x, particle.y);
+          ctx.rotate(particle.rotation);
+          ctx.fillStyle = particle.color;
+          ctx.fillRect(-particle.size / 2, -particle.size / 2, particle.size, particle.size * 0.62);
+          ctx.restore();
+        });
+
+        particles = particles.filter((particle) => particle.life > 0 && particle.y < canvas.clientHeight + 80);
+
+        if (particles.length === 0) {
+          resetCanvasParticles();
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(loopCanvas);
+    }
+
+    effects.forEach(createEffectButton);
+    replayButton.addEventListener('click', replayCurrentEffect);
+    window.addEventListener('resize', () => {
+      if (currentEffect === 'fire') resetCanvasParticles();
+    });
+
+    createSnow();
+  </script>
+</body>
+</html>
