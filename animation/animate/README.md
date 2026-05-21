@@ -6,22 +6,15 @@
 
 ## 바로 보기
 
-- [미리보기 index](./index.html)
+- [미리보기](https://heodokyung.github.io/frontend-study/animation/animate/)
 - [기본 재료 낙하 모션](./animate.html)
 - [마크업 기반 재료 낙하 모션](./animate2.html)
 - [이벤트 비주얼형 완성 모션](./animate3.html)
-
-GitHub Pages에 배포되어 있다면 아래 주소 형식으로 확인할 수 있습니다.
-
-```txt
-https://heodokyung.github.io/frontend-study/animation/animate/
-```
 
 ## 파일 구성
 
 | 파일 | 설명 |
 |---|---|
-| `index.html` | 각 애니메이션을 버튼으로 선택해 바로 확인하는 미리보기 화면 |
 | `animate.html` | JavaScript로 재료 이미지를 생성해 떨어뜨리는 초기 버전 |
 | `animate2.html` | HTML에 이미지를 배치하고 CSS 변수로 위치를 제어하는 버전 |
 | `animate3.html` | 실제 이벤트 비주얼 이미지와 그릇 퍼짐 효과를 함께 적용한 확장 버전 |
