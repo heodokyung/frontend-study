@@ -38,10 +38,10 @@
 
 | 폴더 | 설명 |
 |---|---|
-| [`animation/css-effect`](./animation/css-effect/) | 눈, 불꽃 같은 CSS/JavaScript 기반 시각 효과 |
-| [`animation/animate`](./animation/animate/) | HTML 파일 중심의 기본 애니메이션 실습 |
-| [`animation/animate-css`](./animation/animate-css/) | `animate.css` 라이브러리 구조와 사용 방식 참고 |
-| [`animation/aos`](./animation/aos/) | 스크롤 애니메이션 라이브러리 AOS 구조 참고 |
+| [`디렉토리: animation/css-effect`](./animation/css-effect/) [`바로가기`](https://heodokyung.github.io/frontend-study/animation/css-effect/) | 눈, 불꽃 같은 CSS/JavaScript 기반 시각 효과 |
+| [`디렉토리: animation/animate`](./animation/animate/) | HTML 파일 중심의 기본 애니메이션 실습 |
+| [`디렉토리: animation/animate-css`](./animation/animate-css/) | `animate.css` 라이브러리 구조와 사용 방식 참고 |
+| [`디렉토리: animation/aos`](./animation/aos/) | 스크롤 애니메이션 라이브러리 AOS 구조 참고 |
 
 ### JavaScript
 
