@@ -1,131 +1,65 @@
-name: Deploy frontend-study to GitHub Pages
-
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: github-pages
-  cancel-in-progress: true
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: |
-            react/**/package-lock.json
-
-      - name: Prepare static site
-        run: |
-          rm -rf _site
-          mkdir -p _site
-
-          rsync -a ./ _site/ \
-            --exclude='.git' \
-            --exclude='.github' \
-            --exclude='_site' \
-            --exclude='**/node_modules' \
-            --exclude='**/build' \
-            --exclude='**/dist' \
-            --exclude='**/.cache' \
-            --exclude='**/.vite' \
-            --exclude='**/.env' \
-            --exclude='**/.env.local'
-
-          touch _site/.nojekyll
-
-      - name: Build React projects
-        env:
-          CI: false
-        run: |
-          build_project() {
-            local project_dir="$1"
-            local deploy_dir="_site/$project_dir"
-
-            echo "----------------------------------------"
-            echo "Build target: $project_dir"
-
-            if [ ! -d "$project_dir" ]; then
-              echo "::warning::$project_dir 폴더가 없어 빌드를 건너뜁니다."
-              return 0
-            fi
-
-            if [ ! -f "$project_dir/package.json" ]; then
-              echo "::warning::$project_dir/package.json 파일이 없어 빌드를 건너뜁니다."
-              return 0
-            fi
-
-            pushd "$project_dir"
-
-            if [ -f package-lock.json ]; then
-              npm ci
-            else
-              echo "::warning::$project_dir/package-lock.json 파일이 없어 npm install로 진행합니다. 가능하면 package-lock.json을 커밋해 주세요."
-              npm install
-            fi
-
-            npm run build
-
-            local build_output=""
-            if [ -d build ]; then
-              build_output="build"
-            elif [ -d dist ]; then
-              build_output="dist"
-            else
-              echo "::error::$project_dir 빌드 결과 폴더를 찾지 못했습니다. build 또는 dist 폴더가 필요합니다."
-              exit 1
-            fi
-
-            popd
-
-            rm -rf "$deploy_dir"
-            mkdir -p "$deploy_dir"
-            cp -a "$project_dir/$build_output/." "$deploy_dir/"
-
-            echo "Copied $project_dir/$build_output -> $deploy_dir"
-          }
-
-          build_project "react/react-netflix"
-          build_project "react/react-movie-list"
-          build_project "react/react-animation"
-          build_project "react/react-coin-list"
-          build_project "react/react-lottery"
-
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+{
+	"name": "react-netflix",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"@testing-library/jest-dom": "^5.16.4",
+		"@testing-library/react": "^13.3.0",
+		"@testing-library/user-event": "^14.3.0",
+		"@types/jest": "^28.1.6",
+		"@types/node": "^18.0.6",
+		"@types/react": "^18.0.15",
+		"@types/react-dom": "^18.0.6",
+		"@types/styled-components": "^5.1.25",
+		"axios": "^0.27.2",
+		"dotenv": "^16.0.1",
+		"framer-motion": "^6.5.1",
+		"gh-pages": "^4.0.0",
+		"lodash.uniqby": "^4.7.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-helmet": "^6.1.0",
+		"react-helmet-async": "^1.3.0",
+		"react-hook-form": "^7.33.1",
+		"react-query": "^3.39.2",
+		"react-router-dom": "^6.3.0",
+		"react-scripts": "^5.0.1",
+		"recoil": "^0.7.4",
+		"reset": "^0.1.0",
+		"styled-components": "^5.3.5",
+		"styled-reset": "^4.4.2",
+		"typescript": "^4.7.4",
+		"web-vitals": "^2.1.4"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject",
+		"deploy": "gh-pages -d build",
+		"predeploy": "npm run build"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"homepage": "/frontend-study/react/react-netflix/",
+	"devDependencies": {
+		"@types/lodash.uniqby": "^4.7.7",
+		"@types/react-helmet": "^6.1.5"
+	}
+}
