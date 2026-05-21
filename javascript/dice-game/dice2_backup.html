@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>  
+
+* {  
+  padding: 0;
+  margin: 0; }
+
+  body {
+  margin: 30px;
+  font-family: 'Source Sans Pro', sans-serif;  
+  color: #000;
+}
+@keyframes diceRoll {
+  0% {transform: rotate(0deg) scale(1);}
+  25% {transform: rotate(45deg) scale(1);}
+  50% {transform: rotate(50deg) scale(1);}
+  100% {transform: rotate(-360deg) scale(1);}
+}
+
+.dice__event--wrap .dice {width: 40px; height: 40px; background-color: white; border-radius: .3rem; padding: 10px; margin-left: 2rem; display: inline-flex; flex-wrap: wrap; justify-content: space-between; vertical-align: top;}
+.dice__event--wrap .dice-animation {animation: diceRoll .8s; animation-direction: reverse;}
+.dice__event--wrap .dice .dot {background-color: #EA4E66; width: 10px; height: 10px; border-radius: 100%; display: none; font-size: 6px; text-align: center; line-height: 1.8;}
+
+.dice__event--wrap .row-one,
+.dice__event--wrap .row-two,
+.dice__event--wrap .row-three {display: none;}
+
+/* For 1 */
+.dice__event--wrap .dice__show--1 {justify-content: center; align-items: center;}
+.dice__event--wrap .dice__show--1 .row-one {display: block;}
+.dice__event--wrap .dice__show--1 .dot:first-child{display: block;}
+
+/* For 2 */
+.dice__event--wrap .dice__show--2 .row-one,
+.dice__event--wrap .dice__show--2 .row-three {display: flex;}
+.dice__event--wrap .dice__show--2 .row-one .dot:first-child,
+.dice__event--wrap .dice__show--2 .row-three .dot:last-child{display: block;}
+.dice__event--wrap .dice__show--2 .row-one {align-self: flex-end;}
+
+/* For 3 */
+.dice__event--wrap .dice__show--3 .row-one,
+.dice__event--wrap .dice__show--3 .row-two,
+.dice__event--wrap .dice__show--3 .row-three {display: flex;}
+.dice__event--wrap .dice__show--3 .row-one .dot:first-child,
+.dice__event--wrap .dice__show--3 .row-two .dot:nth-child(2),
+.dice__event--wrap .dice__show--3 .row-three .dot:last-child {display: block;}
+.dice__event--wrap .dice__show--3 .row-one {align-self: flex-end;}
+.dice__event--wrap .dice__show--3 .row-two {align-self: center;}
+
+/* For 4 */
+.dice__event--wrap .dice__show--4 {flex-direction: column;}
+.dice__event--wrap .dice__show--4 .row-one,
+.dice__event--wrap .dice__show--4 .row-three {display: flex; justify-content: space-between;}
+.dice__event--wrap .dice__show--4 .dot {display: block;}
+.dice__event--wrap .dice__show--4 .row-one .dot:nth-child(2),
+.dice__event--wrap .dice__show--4 .row-three .dot:nth-child(2) {display: none;}
+
+/* For 5 */
+.dice__event--wrap .dice__show--5 {flex-direction: column;}
+.dice__event--wrap .dice__show--5 .row-one,
+.dice__event--wrap .dice__show--5 .row-two,
+.dice__event--wrap .dice__show--5 .row-three {display: flex; justify-content: space-between;}
+.dice__event--wrap .dice__show--5 .dot {display: block;}
+.dice__event--wrap .dice__show--5 .row-one .dot:nth-child(2),
+.dice__event--wrap .dice__show--5 .row-two .dot:first-child,
+.dice__event--wrap .dice__show--5 .row-two .dot:last-child,
+.dice__event--wrap .dice__show--5 .row-three .dot:nth-child(2) {display: none;}
+.dice__event--wrap .dice__show--5 .row-two {justify-content: center;}
+
+/* For 6 */
+.dice__event--wrap .dice__show--6 {flex-direction: column;}
+.dice__event--wrap .dice__show--6 .row-one,
+.dice__event--wrap .dice__show--6 .row-two,
+.dice__event--wrap .dice__show--6 .row-three {display: flex; justify-content: space-between;}
+
+.dice__event--wrap .dice__show--6 .dot {display: block;}
+.dice__event--wrap .dice__show--6 .row-one .dot:nth-child(2),
+.dice__event--wrap .dice__show--6 .row-two .dot:nth-child(2),
+.dice__event--wrap .dice__show--6 .row-three .dot:nth-child(2) {display: none;}
+
+/* 스타일 추가 */
+.dice__event--wrap .dice__number--wrap {text-align:center; font-weight:bold; font-size:32px; margin-bottom:50px;}
+
+.dice__event--wrap .dice__position {position: relative; width:400px; height:400px; margin:0px auto;}
+.dice__event--wrap .dice__position .dice__position--item {position: absolute; width:100px; height:100px; box-sizing:border-box; display: flex; align-items: center; justify-content:center; color:#fff;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(1) {top:0px; left:0px; background-color: #0c44b4;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(2) {top:0px; left:100px; background-color: #88d441;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(3) {top:0px; left:200px; background-color: #32363E;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(4) {top:0px; left:300px; background-color: #9519ad;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(5) {top:100px; left:300px; background-color: #d8cb15;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(6) {top:200px; left:300px; background-color: #EA4E66;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(7) {top:300px; left:300px; background-color: #0c44b4;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(8) {top:300px; left:200px; background-color: #88d441;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(9) {top:300px; left:100px; background-color: #32363E;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(10) {top:300px; left:0px; background-color: #9519ad;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(11) {top:200px; left:0px; background-color: #d8cb15;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(12) {top:100px; left:0px; background-color: #EA4E66;}
+.dice__event--wrap .dice__position .dice__position--item.is-active {background-color:#ff0026;}
+.dice__event--wrap .dice__position .dice__position--item em {display:none;}
+.dice__event--wrap .dice__position .dice__position--item.is-active em {display: inline-block; color:#fff; font-weight:bold;}
+</style>
+</head>
+<body>
+    <div class="dice__event--wrap">
+        <article class="dice__number--wrap">
+            <p class="dice__num">주사위 숫자: <em class="dice__count--info">0</em></p>
+            <p class="total">주사위 합계: <em class="dice__total--info">0</em></p>
+        </article>
+
+        <article class="dice__position">
+            <div class="dice__position--item">item0: <em class="">여기</em></div>
+            <div class="dice__position--item">item1: <em class="">여기</em></div>
+            <div class="dice__position--item">item2: <em class="">여기</em></div>
+            <div class="dice__position--item">item3: <em class="">여기</em></div>
+            <div class="dice__position--item">item4: <em class="">여기</em></div>
+            <div class="dice__position--item">item5: <em class="">여기</em></div>
+            <div class="dice__position--item">item6: <em class="">여기</em></div>
+            <div class="dice__position--item">item7: <em class="">여기</em></div>
+            <div class="dice__position--item">item8: <em class="">여기</em></div>
+            <div class="dice__position--item">item9: <em class="">여기</em></div>
+            <div class="dice__position--item">item10: <em class="">여기</em></div>
+            <div class="dice__position--item">item11: <em class="">여기</em></div>
+            <div class="dice__position--item">item12: <em class="">여기</em></div>
+            <div class="dice__position--item">item13: <em class="">여기</em></div>
+        </article>
+
+        <article class="dice__event--random">
+            <p class="dice__num">주사위 숫자: <em class="dice__count--info">0</em></p>
+            <p class="total">주사위 합계: <em class="dice__total--info">0</em></p>
+            <button type="button" class="btn__dice--play">Tira los dados</button>
+
+            <div class="dice-1 dice dice__show--6">
+                <div class="row-one">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="row-two">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="row-three">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+
+            <div class="dice-2 dice dice__show--6">
+                <div class="row-one">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="row-two">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="row-three">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+            </div>
+            </div>
+
+            <!-- <div class="dice-3 dice dice__show--2 dice-animation">
+                <div class="row-one">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                </div>
+                <div class="row-two">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                </div>
+                <div class="row-three">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                </div>
+            </div> -->
+
+        </article>
+    </div>
+</div> <!-- END dice-board -->
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+<script>
+    /*
+    let animateState = false;
+    function apuestaRandom(){    
+        animateState = true;        
+        const dice1     = document.querySelector('.dice__event--random .dice-1');
+        const dice2     = document.querySelector('.dice__event--random .dice-2');
+        // var dice3 = document.querySelector('.dice-3');
+        const totalNum  = document.querySelector('.total__number');
+        
+        let resultDice1 = Math.ceil(Math.random() * 6);
+        let resultDice2 = Math.ceil(Math.random() * 6);
+        let resultTotalDice = 0
+        let aniTime = 1000;
+        // var resultDice3 = Math.ceil(Math.random() * 6);
+
+        setTimeout(function(){
+            for(i=1; i<=6; i++){                               
+                dice1.classList.remove("dice__show--" + i);
+                dice2.classList.remove("dice__show--" + i);                
+            // dice3.classList.remove("dice__show--" + i);
+            }        
+        }, aniTime);
+
+        dice1.classList.remove('dice-animation');
+        dice2.classList.remove('dice-animation');
+        // dice3.classList.remove('dice-animation');
+
+        setTimeout(function(){
+            dice1.classList.add('dice-animation');
+            dice2.classList.add('dice-animation');
+            // dice3.classList.add('dice-animation');
+        }, 10);
+
+        setTimeout(function(){
+            dice1.classList.add('dice__show--' + resultDice1);
+            dice2.classList.add('dice__show--' + resultDice2);
+            // dice3.classList.add('dice__show--' + resultDice3);
+            animateState = false;
+        }, aniTime);
+
+        resultTotalDice = resultDice1 + resultDice2;        
+        totalNum.innerText = resultTotalDice
+
+        // if(resultDice1 == resultDice2 || resultDice1 == resultDice3 || resultDice2 == resultDice3){
+        // if(resultDice1 == resultDice2){
+        //     console.log('Ganaste el juego');
+        // } else {
+        //     console.log('Perdiste el juego');
+        // }        
+    }
+    */
+
+    $(function(){        
+        let diceSum = 0;
+        let index = 0;
+              
+        function apuestaRandom() {            
+                        
+            $('.dice__event--random .dice').removeClass('dice-animation');
+
+            // 랜덤숫자
+            const makeRandomNumbers = () => {
+                let randomNumber = Math.ceil(Math.random() * 6);
+                return randomNumber;
+            }            
+            
+            const diceElements  = $('.dice__event--random .dice');
+            const dice1         = $('.dice__event--random .dice-1');
+            const dice2         = $('.dice__event--random .dice-2');
+            const diceTotalNum  = $('.dice__total--info');
+            const diceCountNum  = $('.dice__count--info');
+            const btnDicePlay   = $('.btn__dice--play');            
+            const diceClass     = ['dice__show--1', 'dice__show--2', 'dice__show--3', 'dice__show--4', 'dice__show--5', 'dice__show--6'];
+            
+            let dicePositionLen = $('.dice__position .dice__position--item').length;                        
+            let diceVal         = 0;
+            let aniTime         = 400;
+
+            
+            btnDicePlay.attr("disabled", true); // 버튼 비활성화
+
+            
+            var dicePositionArray = [];
+            
+            let resultDice1 = makeRandomNumbers();
+            let resultDice2 = makeRandomNumbers();
+
+            diceVal = (parseInt(resultDice1) + parseInt(resultDice2));
+            diceSum += diceVal;
+            
+            console.log("주사위숫자===================>", diceVal)
+            console.log("합계===================>", diceSum)
+
+
+            setTimeout(function(){
+                $('.dice__event--random .dice').addClass('dice-animation');                
+            }, 10);
+
+            // 주사위 이벤트
+            setTimeout(function(){
+                $('.dice__event--random .dice').removeClass('dice__show--1 dice__show--2 dice__show--3 dice__show--4 dice__show--5 dice__show--6');
+                dice1.addClass('dice__show--' + resultDice1);
+                dice2.addClass('dice__show--' + resultDice2);                
+            }, aniTime);
+
+
+            let prevVal = diceSum - diceVal;
+            const loopEvent = () => {
+                for(let i=prevVal; i<diceSum; i++){
+                    (function(x){
+                        setTimeout(function(){
+                            $('.dice__position .dice__position--item').removeClass('is-active');
+                            $('.dice__position .dice__position--item').eq(x).addClass('is-active');
+                            if((diceSum - 1) == x || x == dicePositionLen -1) {
+                                btnDicePlay.attr("disabled", false);
+                            }
+                            if( x == dicePositionLen -1) {
+                                setTimeout(function(){
+                                    alert('완주완료!!!!!')
+                                    $('.dice__position .dice__position--item').removeClass('is-active');
+                                    diceSum = 0;
+                                }, 10)
+                            }
+                        },150*x);
+                    })(i);
+                }
+            }
+            loopEvent();
+
+            diceTotalNum.text(diceSum)
+            diceCountNum.text(diceVal)
+        }        
+
+        // 주사위 버튼 클릭
+        $('.btn__dice--play').on('click', function(){            
+            apuestaRandom();            
+        });
+    })
+
+</script>
+</body>
+</html>

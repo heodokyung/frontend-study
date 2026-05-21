@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>재료 쌓기 애니메이션</title>
+  <style>
+     body {
+      margin: 0;
+      background: #fdf9e6;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      text-align: center;
+      padding-top: 80px;
+    }
+
+    .title {
+      position: relative;
+      font-size: 50px;
+      color: #0d9f74;
+      z-index: 5;
+    }
+
+    .bowl {
+      width: 300px;
+      height: 150px;
+      background-color: #2c7a77;
+      border-radius: 0 0 150px 150px;
+      margin: 200px auto 0;
+      position: relative;
+      overflow: hidden;
+      z-index: 3;
+    }
+
+    .bowl::before {
+      content: "CJ THE MARKET";
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #104b4a;
+      font-weight: bold;
+    }
+
+    .ingredient {
+      position: absolute;
+      width: 35px;
+      opacity: 0;
+      animation: fall 1.2s ease-in-out forwards;
+    }
+
+    @keyframes fall {
+      0% { opacity: 0; transform: translate(0,0); }
+      20% { opacity: 1; }
+      100% { opacity: 1; transform: translate(var(--x), var(--y)) rotate(var(--r)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">슬로우 라이프</div>
+    <div class="bowl" id="bowl"></div>
+  </div>
+
+  <script>
+    const ingredients = [
+        {src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f966.png', x:-90, y:300, r:'-20deg'},
+        {src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f955.png', x:-60, y:320, r:'-15deg'},
+        {src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f96c.png', x:-30, y:330, r:'-10deg'},
+        {src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34f.png', x:0, y:340, r:'0deg'},
+        
+        {src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f966.png', x:30, y:330, r:'10deg'},
+        {src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f955.png', x:60, y:320, r:'15deg'},
+        {src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f96c.png', x:90, y:300, r:'20deg'},
+
+        {src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34f.png', x:-45, y:310, r:'-10deg'},
+        {src:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f966.png', x:45, y:310, r:'10deg'},
+        ];
+
+        const container = document.querySelector('.container');
+        const title = document.querySelector('.title');
+
+        ingredients.forEach((item, i) => {
+        const img = document.createElement('img');
+        img.src = item.src;
+        img.className = 'ingredient';
+
+        const titleRect = title.getBoundingClientRect();
+        img.style.left = `${titleRect.left + titleRect.width/2 - 18}px`; 
+        img.style.top = `${titleRect.top - 40}px`;
+
+        // ★그룹별로 delay를 지정 (핵심 부분)
+        let delay = 0;
+        // if (i <= 3) delay = 0;          // 첫번째 그룹 (0~3번 즉시)
+        // else if (i <= 6) delay = 0.1;   // 두번째 그룹 (4~6번)
+        // else delay = 0.2;                 // 세번째 그룹 (7번 이후)
+        if (i <= 3) delay = Math.random() * 0.1;       // 0~0.2초
+        else if (i <= 6) delay = 0.2 + Math.random() * 0.1;  // 0.5~0.7초
+        else delay = 0.2 + Math.random() * 0.1;          // 1.0~1.2초
+
+        img.style.animationDelay = `${delay}s`;
+        img.style.setProperty('--x', `${item.x}px`);
+        img.style.setProperty('--y', `${item.y}px`);
+        img.style.setProperty('--r', `${item.r}`);
+
+        container.appendChild(img);
+        });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+ <article class="event-cont visual">                    	
+    <!-- 눈 내림 효과 레이어 -->
+    <div class="snow-wrap"></div>
+</article>
+
+<script>
+  // 눈 생성
+// document.addEventListener('DOMContentLoaded', function () {
+//   const snowContainers = document.querySelectorAll('.snow-wrap');
+//   if (!snowContainers || snowContainers.length === 0) return;
+
+//   const SNOW_COUNT = 30; // 화면이 너무 비면 숫자 늘리기
+
+//   snowContainers.forEach(container => {
+//     const frag = document.createDocumentFragment();
+
+//     for (let i = 0; i < SNOW_COUNT; i++) {
+//       const snow = document.createElement('div');
+//       snow.className = 'snowflake';
+//       snow.textContent = '❄'; // 혹은 '.' 또는 작은 원형 SVG/이미지 사용 가능
+
+//       // 위치 / 크기 / 타이밍 랜덤값
+//       snow.style.left = Math.random() * 100 + '%'; // 컨테이너 내부 기준
+//       snow.style.fontSize = (Math.random() * 12 + 8) + 'px';
+//       // 개별 duration & delay를 지정하면 자연스러움
+//       snow.style.animationDuration = (Math.random() * 6 + 6) + 's'; // 6~12초
+//       snow.style.animationDelay = (Math.random() * 5) + 's';
+//       // 수평 흔들림 범위 (px) — 아래로 갈수록 약간씩 이동
+//       snow.style.setProperty('--xmove', (Math.random() * 160 - 80) + 'px');
+
+//       frag.appendChild(snow);
+//     }
+
+//     container.appendChild(frag);
+//   });
+// });
+
+document.addEventListener('DOMContentLoaded', function () {
+  const snowContainer = document.querySelector('.event-cont.visual .snow-wrap');
+  if (!snowContainer) return; // 안전망 — 요소 없으면 중단
+
+  const snowCount = 40; // 눈송이 개수 조절
+  // 성능 위해 DocumentFragment에 모아서 한 번에 삽입
+  const frag = document.createDocumentFragment();
+
+  for (let i = 0; i < snowCount; i++) {
+    const snow = document.createElement('div');
+    snow.classList.add('snowflake');
+
+    // 모양: 유니코드 눈송이나 작게 원 모양으로
+    snow.textContent = '❄'; // 또는 '●❄'로
+
+    // 좌우 시작 위치 (vw 단위)
+    const left = Math.random() * 100;
+    snow.style.left = left + 'vw';
+
+    // 크기 클래스 임의 적용
+    const sizeRand = Math.random();
+    if (sizeRand < 0.4) snow.classList.add('small');
+    else if (sizeRand < 0.8) snow.classList.add('medium');
+    else snow.classList.add('large');
+
+    // 애니메이션 지속시간 및 딜레이 랜덤화
+    const duration = 6 + Math.random() * 8; // 6 ~ 14s
+    const delay = Math.random() * 5;        // 0 ~ 5s
+    snow.style.animationDuration = duration + 's';
+    snow.style.animationDelay = delay + 's';
+
+    // 좌우 흔들림 (낙하 중 X 이동값)
+    const xMove = (Math.random() * 80 - 40); // -40px ~ +40px
+    snow.style.setProperty('--xmove', xMove + 'px');
+
+    // 약간의 초기 위치 랜덤 (음수로 시작해 자연스럽게 등장)
+    const startTop = -(Math.random() * 20 + 5); // -5vh ~ -25vh
+    snow.style.top = startTop + 'vh';
+
+    frag.appendChild(snow);
+  }
+
+  snowContainer.appendChild(frag);
+});
+</script>
+
+<style>
+.snow-wrap {position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 3;}
+.snowflake {position: absolute; top: -10px; color: #fff; opacity: 0.9; animation-name: fall; animation-timing-function: linear; animation-iteration-count: infinite; will-change: transform, opacity;  user-select: none; pointer-events: none;}
+@keyframes fall {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) translateX(var(--xmove, 0));
+    opacity: 0;
+  }
+}
+/* 눈송이 여러 개 생성 */
+.snowflake:nth-child(odd) {animation-duration: 8s;}
+.snowflake:nth-child(even) {animation-duration: 10s; opacity: 0.6;}
+.snowflake.small { font-size: 8px; opacity: 0.7; }
+.snowflake.medium { font-size: 12px; opacity: 0.85; }
+.snowflake.large { font-size: 18px; opacity: 0.95; }
+</style>

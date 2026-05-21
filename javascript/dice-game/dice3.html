@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+ * { padding: 0px; margin: 0px; }
+html, body { max-width: 100%; height:100%; background-color: skyblue; }
+
+
+.dice_wrap { display: flex; display: flex; margin-bottom: 20px;  justify-content: center; align-items: center;}
+.dice_wrap > [class^=dice]:last-of-type {margin-right: 0px;}
+
+/* 주사위 만들기 */
+.dice_wrap > [class^=dice] { width: 100px; margin-right: 10px; padding-top: 100px; position: relative; }
+.dice_inner { position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; perspective: 300px; padding: 20px; box-sizing: border-box; }
+.dice_wrap > [class^=dice] .dice { width: 100%; height: 100%;  transition: 1s; transform-style: preserve-3d;}
+.dice_wrap > [class^=dice] .dice > div { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 60px; }
+.dice_wrap > [class^=dice] .dice .face1 { transform: rotateY(0deg) translateZ(60px); background: red; }
+.dice_wrap > [class^=dice] .dice .face2 { transform: rotateY(90deg) translateZ(60px); background: blue; }
+.dice_wrap > [class^=dice] .dice .face3 { transform: rotateX(90deg) translateZ(60px); background: green; }
+.dice_wrap > [class^=dice] .dice .face4 { transform: rotateX(270deg) translateZ(60px); background: pink; }
+.dice_wrap > [class^=dice] .dice .face5 { transform: rotateY(270deg) translateZ(60px); background: royalblue; }
+.dice_wrap > [class^=dice] .dice .face6 { transform: rotateY(180deg) translateZ(60px); background: purple; }
+/* 주사위 눈 */
+.dice_wrap > [class^=dice] .dice.face1 { transform: rotateX(0deg) rotateY(0deg); }
+.dice_wrap > [class^=dice] .dice.face2 { transform: rotateX(0deg) rotateY(-90deg); }
+.dice_wrap > [class^=dice] .dice.face3 { transform: rotateX(-90deg) rotateY(0deg); }
+.dice_wrap > [class^=dice] .dice.face4 { transform: rotateX(-270deg) rotateY(0deg); }
+.dice_wrap > [class^=dice] .dice.face5 { transform: rotateX(0deg) rotateY(-270deg); }
+.dice_wrap > [class^=dice] .dice.face6 { transform: rotateX(0deg) rotateY(-180deg); }
+
+#btnRolling { display: block; width: 160px; height: 40px; margin: 0 auto; background-color: royalblue; border: none; border-radius: 4px; color: #fff; cursor: pointer; position: relative; overflow: hidden; }
+#btnRolling::before{ display: block; content: ''; width: 60px; height: 100%; background-color: #fff; position: absolute; top:0; left: -60px; transition: all 0.5s; transform: skewX(-45deg); transform-origin: top left; opacity: 0.3; }
+#btnRolling:hover::before { transform: skewX(-45deg) translateX(280px); }
+
+/* 반응형 */
+/* @media screen and (max-width : 429px){
+  #diceBox { box-shadow:none;}
+  #diceBox > .dice_wrap { display: block;}
+  #diceBox > .dice_wrap > [class^=dice] { width: 100%; margin-right: 0%; padding-top: 100%; }
+} */
+</style>
+</head>
+<body>
+    
+    <div id="wrap">
+        <section id="diceBox">
+
+          <div class="dice_wrap">            
+            <article class="dice01">
+              <div class="dice_inner">
+                <div class="dice">
+                  <div class="face1">1</div>
+                  <div class="face2">2</div>
+                  <div class="face3">3</div>
+                  <div class="face4">4</div>
+                  <div class="face5">5</div>
+                  <div class="face6">6</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="dice02">
+              <div class="dice_inner">
+                <div class="dice">
+                  <div class="face1">1</div>
+                  <div class="face2">2</div>
+                  <div class="face3">3</div>
+                  <div class="face4">4</div>
+                  <div class="face5">5</div>
+                  <div class="face6">6</div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <button id="btnRolling">주사위 굴리기</button>
+        </section>
+      </div>
+
+    
+<script
+  src="https://code.jquery.com/jquery-2.2.4.js"
+  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+  crossorigin="anonymous"></script>
+<script>    
+    //  translateZ는  .dice의 가로값 절반이면 됨
+// 리사이징 될 떄마다 계산
+var dice = document.querySelectorAll('.dice');
+var dice_width = dice[0].clientWidth;
+var face1 = document.querySelectorAll('.face1');
+var face2 = document.querySelectorAll('.face2');
+var face3 = document.querySelectorAll('.face3');
+var face4 = document.querySelectorAll('.face4');
+var face5 = document.querySelectorAll('.face5');
+var face6 = document.querySelectorAll('.face6');
+function DiceResizing(){
+  Array.prototype.forEach.call(face1, function(item){
+    item.style.transform = 'rotateY(0deg) translateZ(' + dice_width/2 + 'px)';
+  });
+  Array.prototype.forEach.call(face2, function(item){
+    item.style.transform = 'rotateY(90deg) translateZ(' + dice_width/2 + 'px)';
+  });
+  Array.prototype.forEach.call(face3, function(item){
+    item.style.transform = 'rotateX(90deg) translateZ(' + dice_width/2 + 'px)';
+  });
+  Array.prototype.forEach.call(face4, function(item){
+    item.style.transform = 'rotateX(270deg) translateZ(' + dice_width/2 + 'px)';
+  });
+  Array.prototype.forEach.call(face5, function(item){
+    item.style.transform = 'rotateY(270deg) translateZ(' + dice_width/2 + 'px)';
+  });
+  Array.prototype.forEach.call(face6, function(item){
+    item.style.transform = 'rotateY(180deg) translateZ(' + dice_width/2 + 'px)';
+  });
+}
+
+DiceResizing();
+
+window.onresize = function(){
+  dice_width = dice[0].clientWidth;
+  DiceResizing();
+};
+
+// 랜덤 주사위 눈
+var RandomNumber = function(){
+  return 'face' + Math.floor(Math.random()*6);
+};
+function rolling(){
+    let randomNum1 = RandomNumber();
+    let randomNum2 = RandomNumber();
+    let randomSum  = randomNum1 + randomNum2;
+    dice[0].classList.add(randomNum1);
+    dice[1].classList.add(randomNum2);
+}
+
+// 주사위 굴리기
+var btnRolling = document.querySelector('#btnRolling');
+btnRolling.onclick = function(){
+  dice[0].classList.value = "dice";
+  dice[1].classList.value = "dice";
+  rolling();
+};
+   
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>재료 쌓기 애니메이션</title>
+  <style>
+    body {
+      margin: 0;
+      background: #fdf9e6;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      text-align: center;
+      padding-top: 80px;
+    }
+
+    .title {
+      font-size: 50px;
+      color: #0d9f74;
+      z-index: 5;
+      position: relative;
+    }
+
+    .bowl {
+      width: 300px;
+      height: 150px;
+      background-color: #2c7a77;
+      border-radius: 0 0 150px 150px;
+      margin: 200px auto 0;
+      position: relative;
+      overflow: hidden;
+      z-index: 3;
+    }
+
+    .bowl::before {
+      content: "CJ THE MARKET";
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #104b4a;
+      font-weight: bold;
+    }
+
+    .ingredient {
+      position: absolute;      
+      opacity: 0;
+      animation: fall 1.2s ease-in-out forwards;
+    }
+
+    /* 이미지별로 위치 지정 */
+    .item1 {width: 35px; --x:-90px; --y:300px; --r:-20deg; }
+    .item2 {width: 35px; --x:-60px; --y:320px; --r:-15deg; }
+    .item3 {width: 35px; --x:-30px; --y:330px; --r:-10deg; }
+    .item4 {width: 35px; --x:0px; --y:340px; --r:0deg; }
+    .item5 {width: 35px; --x:30px; --y:330px; --r:10deg; }
+    .item6 {width: 35px; --x:60px; --y:320px; --r:15deg; }
+    .item7 {width: 35px; --x:90px; --y:300px; --r:20deg; }
+    .item8 {width: 35px; --x:-45px; --y:310px; --r:-10deg; }
+    .item9 {width: 35px; --x:45px; --y:310px; --r:10deg; }
+
+    @keyframes fall {
+      0% { opacity: 0; transform: translate(0,0); }
+      20% { opacity: 1; }
+      100% { opacity: 1; transform: translate(var(--x), var(--y)) rotate(var(--r)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">슬로우 라이프</div>
+    <div class="bowl" id="bowl"></div>
+
+    <div class="item__wrap">
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f966.png" class="ingredient item1" />
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f955.png" class="ingredient item2" />
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f96c.png" class="ingredient item3" />
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34f.png" class="ingredient item4" />
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f966.png" class="ingredient item5" />
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f955.png" class="ingredient item6" />
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f34f.png" class="ingredient item7" />
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f966.png" class="ingredient item8" />
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f955.png" class="ingredient item9" />
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const ingredients = document.querySelectorAll('.ingredient');
+      const title = document.querySelector('.title');
+      const titleRect = title.getBoundingClientRect();
+
+      ingredients.forEach((img, i) => {
+        // 시작 위치 중앙으로 설정
+        img.style.left = `${titleRect.left + titleRect.width / 2 - 18}px`;
+        img.style.top = `${titleRect.top - 40}px`;
+
+        // 그룹별 delay 지정 (자연스럽게 랜덤 적용)
+        let delay = 0;
+        if (i <= 3) delay = Math.random() * 0.1; // 첫번째 그룹 (0~3번)
+        else if (i <= 6) delay = 0.2 + Math.random() * 0.1; // 두번째 그룹 (4~6번)
+        else delay = 0.3 + Math.random() * 0.1; // 세번째 그룹 (7번 이후)
+
+        img.style.animationDelay = `${delay}s`;
+      });
+    });
+  </script>
+</body>
+</html>

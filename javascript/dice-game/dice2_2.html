@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>  
+
+* {  
+  padding: 0;
+  margin: 0; }
+
+  body {
+  margin: 30px;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #000;
+}
+@keyframes diceRoll {
+  0% {transform: rotate(0deg) scale(1);}
+  25% {transform: rotate(45deg) scale(1);}
+  50% {transform: rotate(50deg) scale(1);}
+  100% {transform: rotate(-360deg) scale(1);}
+}
+
+
+.dice__event--wrap .wrapper {position: relative;}
+.dice__event--wrap .dice__event--random {position:absolute; left:50%; top:50%; transform:translate(-50%, -50%);}
+
+.dice__event--wrap .dice__event--random {width:150px;}
+.dice__event--wrap .dice__event--random .btn__dice--play {display: block; width:calc(100% - 30px); margin:0 auto 10px; padding:10px; box-sizing:border-box;}
+.dice__event--wrap .dice__item--wrap {display:flex; justify-content:space-between; align-items: center;}
+.dice__event--wrap .dice {width: 40px; height: 40px; background-color: #666; border-radius: 4px; padding: 10px; display: inline-flex; flex-wrap: wrap; justify-content: space-between; vertical-align: top;}
+.dice__event--wrap .dice-animation {animation: diceRoll .8s; animation-direction: reverse;}
+.dice__event--wrap .dice .dot {background-color: #EA4E66; width: 10px; height: 10px; border-radius: 100%; display: none; font-size: 6px; text-align: center; line-height: 1.8;}
+
+.dice__event--wrap .row-one,
+.dice__event--wrap .row-two,
+.dice__event--wrap .row-three {display: none;}
+
+/* For 1 */
+.dice__event--wrap .dice__show--1 {justify-content: center; align-items: center;}
+.dice__event--wrap .dice__show--1 .row-one {display: block;}
+.dice__event--wrap .dice__show--1 .dot:first-child{display: block;}
+
+/* For 2 */
+.dice__event--wrap .dice__show--2 .row-one,
+.dice__event--wrap .dice__show--2 .row-three {display: flex;}
+.dice__event--wrap .dice__show--2 .row-one .dot:first-child,
+.dice__event--wrap .dice__show--2 .row-three .dot:last-child{display: block;}
+.dice__event--wrap .dice__show--2 .row-one {align-self: flex-end;}
+
+/* For 3 */
+.dice__event--wrap .dice__show--3 .row-one,
+.dice__event--wrap .dice__show--3 .row-two,
+.dice__event--wrap .dice__show--3 .row-three {display: flex;}
+.dice__event--wrap .dice__show--3 .row-one .dot:first-child,
+.dice__event--wrap .dice__show--3 .row-two .dot:nth-child(2),
+.dice__event--wrap .dice__show--3 .row-three .dot:last-child {display: block;}
+.dice__event--wrap .dice__show--3 .row-one {align-self: flex-end;}
+.dice__event--wrap .dice__show--3 .row-two {align-self: center;}
+
+/* For 4 */
+.dice__event--wrap .dice__show--4 {flex-direction: column;}
+.dice__event--wrap .dice__show--4 .row-one,
+.dice__event--wrap .dice__show--4 .row-three {display: flex; justify-content: space-between;}
+.dice__event--wrap .dice__show--4 .dot {display: block;}
+.dice__event--wrap .dice__show--4 .row-one .dot:nth-child(2),
+.dice__event--wrap .dice__show--4 .row-three .dot:nth-child(2) {display: none;}
+
+/* For 5 */
+.dice__event--wrap .dice__show--5 {flex-direction: column;}
+.dice__event--wrap .dice__show--5 .row-one,
+.dice__event--wrap .dice__show--5 .row-two,
+.dice__event--wrap .dice__show--5 .row-three {display: flex; justify-content: space-between;}
+.dice__event--wrap .dice__show--5 .dot {display: block;}
+.dice__event--wrap .dice__show--5 .row-one .dot:nth-child(2),
+.dice__event--wrap .dice__show--5 .row-two .dot:first-child,
+.dice__event--wrap .dice__show--5 .row-two .dot:last-child,
+.dice__event--wrap .dice__show--5 .row-three .dot:nth-child(2) {display: none;}
+.dice__event--wrap .dice__show--5 .row-two {justify-content: center;}
+
+/* For 6 */
+.dice__event--wrap .dice__show--6 {flex-direction: column;}
+.dice__event--wrap .dice__show--6 .row-one,
+.dice__event--wrap .dice__show--6 .row-two,
+.dice__event--wrap .dice__show--6 .row-three {display: flex; justify-content: space-between;}
+
+.dice__event--wrap .dice__show--6 .dot {display: block;}
+.dice__event--wrap .dice__show--6 .row-one .dot:nth-child(2),
+.dice__event--wrap .dice__show--6 .row-two .dot:nth-child(2),
+.dice__event--wrap .dice__show--6 .row-three .dot:nth-child(2) {display: none;}
+
+/* 스타일 추가 */
+.dice__event--wrap .dice__number--wrap {text-align:center; font-weight:bold; font-size:32px; margin-bottom:50px;}
+
+.dice__event--wrap .dice__position--wrap {position: relative; width:400px; height:400px; margin:0px auto;}
+.dice__event--wrap .dice__position--wrap .marker {position:absolute; top:25px; left:-75px; width:50px; height:50px; z-index:10; background-color:red;}
+.dice__event--wrap .dice__position {position: relative; height:100%;}
+.dice__event--wrap .dice__position .dice__position--item {position: absolute; width:100px; height:100px; box-sizing:border-box; display: flex; align-items: center; justify-content:center; color:#fff;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(1) {top:0px; left:0px; background-color: #0c44b4;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(2) {top:0px; left:100px; background-color: #88d441;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(3) {top:0px; left:200px; background-color: #32363E;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(4) {top:0px; left:300px; background-color: #9519ad;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(5) {top:100px; left:300px; background-color: #d8cb15;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(6) {top:200px; left:300px; background-color: #EA4E66;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(7) {top:300px; left:300px; background-color: #0c44b4;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(8) {top:300px; left:200px; background-color: #88d441;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(9) {top:300px; left:100px; background-color: #32363E;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(10) {top:300px; left:0px; background-color: #9519ad;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(11) {top:200px; left:0px; background-color: #d8cb15;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(12) {top:100px; left:0px; background-color: #EA4E66;}
+.dice__event--wrap .dice__position .dice__position--item:nth-of-type(13) {top:0px; left:0px; background-color: #0c44b4;}
+.dice__event--wrap .dice__position .dice__position--item.is-active {background-color:#ff0026;}
+.dice__event--wrap .dice__position .dice__position--item em {display:none;}
+.dice__event--wrap .dice__position .dice__position--item.is-active em {display: inline-block; color:#fff; font-weight:bold;}
+
+.event__layer--popup {display:none; width:300px; height:200px; box-sizing: border-box; border:1px solid #000; background-color:#fff; z-index:100; position:absolute; left:50%; top:50%; transform: translate(-50%, -50%);}
+.event__layer--popup.is-active {display:flex; align-items:center; justify-content:center;}
+.event__layer--popup .btn__close--layer {position: absolute; top:20px; right:20px; height: 40px; width: 40px;
+    border:none; text-indent:-999em;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml, %3Csvg width='42px' height='42px' viewBox='0 0 42 42' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3Ebtn_popup_close%3C/title%3E%3Cg id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='PC_더마켓_4_POP_배송비절약상품' transform='translate(-1189.000000, -361.000000)'%3E%3Cg id='Group' transform='translate(1189.000000, 361.000000)'%3E%3Crect id='Rectangle' fill='%23FFFFFF' x='0' y='0' width='42' height='42'%3E%3C/rect%3E%3Cpath d='M21.3605263,5.96842105 C21.7747399,5.96842105 22.1105263,6.30420749 22.1105263,6.71842105 L22.1105263,34.0184211 C22.1105263,34.4326346 21.7747399,34.7684211 21.3605263,34.7684211 C20.9463128,34.7684211 20.6105263,34.4326346 20.6105263,34.0184211 L20.6105263,6.71842105 C20.6105263,6.30420749 20.9463128,5.96842105 21.3605263,5.96842105 Z' id='Rectangle' fill='%23000000' transform='translate(21.360526, 20.368421) rotate(-45.000000) translate(-21.360526, -20.368421) '%3E%3C/path%3E%3Cpath d='M21.3605263,5.96842105 C21.7747399,5.96842105 22.1105263,6.30420749 22.1105263,6.71842105 L22.1105263,34.0184211 C22.1105263,34.4326346 21.7747399,34.7684211 21.3605263,34.7684211 C20.9463128,34.7684211 20.6105263,34.4326346 20.6105263,34.0184211 L20.6105263,6.71842105 C20.6105263,6.30420749 20.9463128,5.96842105 21.3605263,5.96842105 Z' id='Rectangle-Copy-10' fill='%23000000' transform='translate(21.360526, 20.368421) scale(-1, 1) rotate(-45.000000) translate(-21.360526, -20.368421) '%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); background-size: cover;}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <!-- 주사위 이벤트 -->
+    <div class="dice__event--wrap">
+        <section class="dice__number--wrap">
+            <p class="dice__num">주사위 숫자: <em class="dice__count--info">0</em></p>
+            <p class="total">주사위 합계: <em class="dice__total--info">0</em></p>
+        </section>
+
+        <section class="wrapper">
+            <article class="dice__position--wrap">
+                <article class="dice__position">
+                    <div class="dice__position--item">item0: <em class="">여기</em></div>
+                    <div class="dice__position--item">item1: <em class="">여기</em></div>
+                    <div class="dice__position--item">item2: <em class="">여기</em></div>
+                    <div class="dice__position--item">item3: <em class="">여기</em></div>
+                    <div class="dice__position--item">item4: <em class="">여기</em></div>
+                    <div class="dice__position--item">item5: <em class="">여기</em></div>
+                    <div class="dice__position--item">item6: <em class="">여기</em></div>
+                    <div class="dice__position--item">item7: <em class="">여기</em></div>
+                    <div class="dice__position--item">item8: <em class="">여기</em></div>
+                    <div class="dice__position--item">item9: <em class="">여기</em></div>
+                    <div class="dice__position--item">item10: <em class="">여기</em></div>
+                    <div class="dice__position--item">item11: <em class="">여기</em></div>
+                    <div class="dice__position--item">완주완료 <em class="">여기</em></div>
+                </article>
+                <div class="marker">마커</div>
+            </article>
+
+            <article class="dice__event--random">            
+                <button type="button" class="btn__dice--play">주사위 굴리기</button>
+
+                <div class="dice__item--wrap">
+                    <article class="dice-1 dice dice__show--6">
+                        <div class="row-one">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <div class="row-two">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <div class="row-three">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                    </article>
+
+                    <article class="dice-2 dice dice__show--6">
+                        <div class="row-one">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <div class="row-two">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <div class="row-three">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                    </article>
+                </div>
+            </article>
+
+              <!-- 레이어팝업 -->
+            <article class="event__layer--popup" data-mask="true">
+                <div class="event__layer--container">
+                    <div class="event__layer--content">
+                        <p class="text">0,000원 적립금  당첨!</p>
+                        <button type="button" id="btn__close--layer" class="btn__close--layer"><i class="blind">닫기</i></button>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </div>
+    <!-- END dice-board -->
+
+  
+
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+</div>
+
+
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+<script>    
+$(function(){
+        
+    let diceSum = 0; // 주사위 총 합계    
+                
+    function diceRandomFunc() {
+        
+        // 랜덤숫자
+        const makeRandomNumbers = () => {
+            let randomNumber = Math.ceil(Math.random() * 6);
+            return randomNumber;
+        }            
+        
+        const diceElements  = $('.dice__event--random .dice'); // 전체 주사위 선택자
+        const dice1         = $('.dice__event--random .dice-1'); // 첫번째 주사위
+        const dice2         = $('.dice__event--random .dice-2'); // 두번째 주사위
+        const diceTotalNum  = $('.dice__total--info'); // 다이스 전체 합계 정보
+        const diceCountNum  = $('.dice__count--info'); // 다이스를 굴렸을 때 나오는 
+        const btnDicePlay   = $('.btn__dice--play');   // 다이스 움직이기 버튼        
+        
+        let dicePositionLen = $('.dice__position .dice__position--item').length; // 전체 보드판 갯수
+        let diceVal         = 0; // 주사위 숫자 합         
+        let prevVal         = 0; // 주사위 이전 값        
+        
+        let resultDice1 = makeRandomNumbers(); // 첫번째 주사위 값
+        let resultDice2 = makeRandomNumbers(); // 두번째 주사위 값      
+        
+        diceVal = (parseInt(resultDice1) + parseInt(resultDice2));
+        diceSum += diceVal;
+        prevVal = diceSum - diceVal;
+
+        clearTimeout(rollingDice);        
+        clearTimeout(moveMarker);
+
+        btnDicePlay.attr("disabled", true); // 버튼 비활성화        
+        $('.dice__event--random .dice').removeClass('dice-animation'); 
+        
+        setTimeout(function(){
+            $('.dice__event--random .dice').addClass('dice-animation');                
+        }, 10);
+
+        // 주사위 굴리기
+        function rollingDice() {
+            $('.dice__event--random .dice').removeClass('dice__show--1 dice__show--2 dice__show--3 dice__show--4 dice__show--5 dice__show--6');
+            dice1.addClass('dice__show--' + resultDice1);
+            dice2.addClass('dice__show--' + resultDice2);                
+        }
+        
+        const rollingStart = setTimeout(rollingDice, 400);
+        
+        function moveMarker() {            
+            let movePos = 0;            
+            const time = 200;
+            
+            let prev = 0;
+            let next = 0;
+
+            for(let i=prevVal; i<diceSum; i++){
+                (function(x){
+                    setTimeout(function(){
+
+                        switch(x+1) {
+                            case 1: $('.marker').stop().animate({'left': '+=100px'}, time, function(){});
+                            break;
+                            case 2: $('.marker').stop().animate({'left': '+=100px'}, time, function(){});
+                            break;
+                            case 3: $('.marker').stop().animate({'left': '+=100px'}, time, function(){});
+                            break;
+                            case 4: $('.marker').stop().animate({'left': '+=100px'}, time, function(){});
+                            break;
+                            case 5: $('.marker').stop().animate({'top': '+=100px'}, time, function(){});
+                            break;
+                            case 6: $('.marker').stop().animate({'top': '+=100px'}, time, function(){});
+                            break;
+                            case 7: $('.marker').stop().animate({'top': '+=100px'}, time, function(){});
+                            break;
+                            case 8: $('.marker').stop().animate({'left': '-=100px'}, time, function(){});
+                            break;
+                            case 9: $('.marker').stop().animate({'left': '-=100px'}, time, function(){});
+                            break;
+                            case 10: $('.marker').stop().animate({'left': '-=100px'}, time, function(){});
+                            break;
+                            case 11: $('.marker').stop().animate({'top': '-=100px'}, time, function(){});
+                            break;
+                            case 12: $('.marker').stop().animate({'top': '-=100px'}, time, function(){});
+                            break;
+                            case 13: 
+                                $('.marker').stop().animate({'top': '-=100px'}, time, function(){
+                                    $('.marker').stop().animate({'left': '-=100px'}, time, function(){});
+                                });
+                            break;                       
+                        }
+                        
+                        if((diceSum - 1) == x || x == dicePositionLen -1) {
+                            btnDicePlay.attr("disabled", false);
+                            // 레이어 호출
+                            setTimeout(function(){
+                                modalToast.open();
+                            }, time + 100);
+                        }                            
+                        if( x == dicePositionLen -1) {
+                            $('.dice__event--wrap').addClass('finish');              
+                        }                       
+                    },300*x);
+                })(i);
+            }
+            diceTotalNum.text(diceSum)
+            diceCountNum.text(diceVal)
+        }
+        const movingStart = setTimeout(moveMarker, 410);        
+    }        
+
+    // 주사위 버튼 클릭
+    $('.btn__dice--play').on('click', function(){            
+        diceRandomFunc();        
+    });
+
+    // 팝업 호출 함수
+    let modalToast = {
+        open(){ // 모달 팝업 호출
+            $('.event__layer--popup').addClass('is-active');				
+            $('html, body').css({'overflow':'hidden'});				
+        },
+        close(){ // 모달 팝업 닫기
+            $('.event__layer--popup').removeClass('is-active');
+            $('html, body').css({'overflow':'auto'});				
+        }
+    }
+    
+    // 팝업 닫기        
+    $(document).on('click', '#btn__close--layer',function(e) {
+        e.stopImmediatePropagation()
+        modalToast.close();
+        if( $('.dice__event--wrap').hasClass('finish') ) {
+            $('.dice__position .dice__position--item').removeClass('is-active');
+            $('.dice__event--wrap').removeClass('finish');
+            diceSum = 0;
+        }
+    });
+});
+
+</script>
+</body>
+</html>

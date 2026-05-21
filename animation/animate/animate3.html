@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>재료 쌓기 애니메이션</title>
+  <style>
+    body,html {
+      margin: 0;
+      background: #fdf9e6;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+    img {width:100%;}
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      text-align: center;      
+      padding-top: 80px;
+      box-sizing: border-box;
+    }
+
+    /* 애니메이션 */
+    @keyframes updown__motion {
+        0% {transform: translateY(0);}
+        100% {transform: translateY(2vw);}
+    }
+    
+    @keyframes fall {
+        0% {
+            transform: translate(calc(var(--s-x)), 0) rotate(var(--s-r, 0deg));
+            opacity: 0;
+        }
+        20% {
+            opacity: 1;
+        }
+        100% {
+            transform: translate(calc(var(--e-x)), calc(var(--e-y))) rotate(var(--r, 0deg));
+            opacity: 1;
+        }
+    }
+    
+    /* bowl 퍼짐 효과 */
+    @keyframes spread {
+        0%   { transform: translateX(-50%) scale(0); opacity: 0.2; }
+        60%  { transform: translateX(-50%) scale(1); opacity: 1; }
+        100% { transform: translateX(-50%) scale(1.2); opacity: 0; }
+    }
+
+    .event__wrap .title {width: 40vw; text-align: center; left: 50%; position: relative; transform: translateX(-50%); margin-top:2vw;}
+    .event__wrap .sub__title {width: 46vw; text-align: center; left: 50%; position: relative; transform: translateX(-50%); }
+    .event__wrap .sub__title div {animation: updown__motion 0.8s linear 0s infinite alternate;}
+    .event__wrap .bowl__wrap {position: absolute; bottom: 18%; width:100%;}
+    .event__wrap .bowl__wrap .bowl__img {width: 70vw; text-align: center; left: 50%; position: relative; transform: translateX(-50%); z-index:20;}
+    .event__wrap .bowl__wrap .bowl__animate {position: absolute; top:-22vw; left: 50%; width: 93vw; transform: translateX(-50%) scale(0); opacity: 0;}
+    .bowl__animate.active {animation: spread 0.8s ease-out forwards;}
+    .event__wrap .item__common {position: absolute; opacity: 0;}
+    .event__wrap .item__common.active {animation: fall 1.2s ease-in-out forwards;}
+
+    /* 이미지별로 위치 지정 */    
+    .item__wrap {position: absolute; top:5vw; width: 100%; height: 100%;
+      /* left: 50%; transform: translateX(-50%);  */
+    }
+    .item1 {width: 32.91vw; --s-x: 1vw; --e-x: 21vw; --e-y: 58vw; --r: 0deg; z-index: 1;}
+    .item2 {width: 33.47vw; --s-x: 68vw; --e-x:48vw; --e-y:58vw; --r:0deg; z-index: 1;}
+    .item3 {width: 15.83vw; --s-x: 1vw; --e-x:14vw; --e-y:77vw; --r:0deg; z-index: 1;}
+    .item4 {width: 11.25vw; --s-x: 64vw; --e-x:56vw; --e-y:81vw; --r:0deg; z-index: 2;}
+    .item5 {width: 29.02vw; --s-x: 70vw; --e-x:54vw; --e-y:76vw; --r:0deg; z-index: 3;}
+    .item6 {width: 29.02vw; --s-x: 1vw; --e-x:16vw; --e-y:70vw; --r:0deg; z-index: 2;}
+    .item7 {width: 15vw; --s-x: 10vw; --e-x:30vw; --e-y:73vw; --r:0deg; z-index: 3;}
+    .item8 {width: 16.52vw; --s-x: 69vw; --e-x:49vw; --e-y:69vw; --r:0deg; z-index: 2;}
+    .item9 {width: 11.25vw; --s-x: 70vw; --e-x:51vw; --e-y:64vw; --r:0deg; z-index: 3;}
+    .item10 {width: 9.16vw; --s-x: 10vw; --e-x:30vw; --e-y:67vw; --r:-49deg; z-index: 3;}
+    .item11 {width: 23.88vw; --s-x: 45vw; --e-x:36vw; --e-y:63vw; --r:0deg; z-index: 4;}
+    .item12 {width: 8.19vw; --s-x: 94vw; --e-x:72vw; --e-y:71vw; --r:0deg; z-index: 5;}
+    .item13 {width: 6.94vw; --s-x: 63vw; --e-x:48vw; --e-y:75vw; --r:0deg; z-index: 5;}
+  </style>
+</head>
+<body>
+  <div class="container event__wrap">
+    <article class="event-cont evt-cont00">
+      <div class="title__wrap">
+          <div class="sub__title">
+              <div>
+                  <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/img_e_title_sub.png" alt="" />
+              </div>
+          </div>
+          <p class="title">
+              <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/img_e_title.png" alt="" />
+          </p>
+      </div>
+      <div class="visual">
+          <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/bg_e_mo_01.jpg" alt="" />
+      </div>
+      <div class="bowl__wrap">
+          <div class="bowl__img">
+              <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/img_e_bowl.png" alt="" />
+          </div>
+          <i class="bowl__animate">
+              <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/img_ani_1.png" alt="" />
+          </i>
+      </div>
+      <div class="item__wrap">
+          <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/ico_item_1.png" class="item__common item1" />
+          <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/ico_item_2.png" class="item__common item2" />
+          <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/ico_item_3.png" class="item__common item3" />
+          <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/ico_item_4.png" class="item__common item4" />
+          <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/ico_item_5.png" class="item__common item5" />
+          <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/ico_item_6.png" class="item__common item6" />
+          <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/ico_item_7.png" class="item__common item7" />
+          <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/ico_item_8.png" class="item__common item8" />
+          <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/ico_item_9.png" class="item__common item9" />
+          <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/ico_item_10.png" class="item__common item10" />
+          <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/ico_item_11.png" class="item__common item11" />
+          <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/ico_item_12.png" class="item__common item12" />
+          <img src="https://www.cjthemarket.com/design/cjom/event/2025/04/ico_item_13.png" class="item__common item13" />
+      </div>
+  </article>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const imgWrap = document.querySelector('.item__wrap');
+    const ingredients = document.querySelectorAll('.item__wrap .item__common');
+    const bowlDrop = document.querySelector('.bowl__animate');
+  
+    let isAnimating = false;
+  
+    function startDropAnimation() {
+      if (isAnimating) return; // 중복 방지
+      isAnimating = true;
+  
+      imgWrap.classList.add('active');
+  
+      ingredients.forEach((img, i) => {
+      img.style.opacity = 0;
+      img.style.animation = 'none';
+      img.offsetHeight;
+      img.style.animation = 'fall 1s ease-out forwards';
+  
+      let delay = 0;
+      if (i <= 3) delay = Math.random() * 0.1;
+      else if (i <= 6) delay = 0.1 + Math.random() * 0.1;
+      else if (i <= 9) delay = 0.2 + Math.random() * 0.1;
+      else delay = 0.3 + Math.random() * 0.1;
+  
+      img.style.animationDelay = `${delay}s`;
+      });
+  
+      setTimeout(() => {
+      bowlDrop.classList.add('active');
+      setTimeout(() => bowlDrop.classList.remove('active'), 800);
+      }, 1600);
+  
+      setTimeout(() => {
+      imgWrap.classList.remove('active');
+      isAnimating = false; // 다음 루프 허용
+      }, 3000);
+  
+      setTimeout(() => {
+      startDropAnimation();
+      }, 3500);
+    }
+
+    imgWrap.classList.remove('active');
+    bowlDrop.classList.remove('active');
+
+  startDropAnimation();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI 프롬프트 변환기</title>
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Prompt Builder</p>
+          <h1>조건만 선택하면 최적의 프롬프트로 변환합니다</h1>
+          <p class="hero-copy">
+            각 상황에 필요한 핵심 조건을 선택하고 필수값을 입력 받아 실행형 프롬프트를 만듭니다.
+          </p>
+        </div>
+      </header>
+
+      <main class="builder-grid">
+        <section class="panel control-panel" aria-labelledby="type-title">
+          <section class="step-card" aria-labelledby="type-title">
+            <div class="section-heading">
+              <p class="step">1단계</p>
+              <h2 id="type-title">작업 유형 선택</h2>
+            </div>
+            <fieldset class="type-options" id="promptTypeGroup">
+              <legend class="sr-only">프롬프트 작업 유형</legend>
+            </fieldset>
+          </section>
+
+          <form id="promptForm" class="prompt-form" novalidate>
+            <section class="step-card" aria-labelledby="requiredTitle">
+              <div class="section-heading split-heading">
+                <div>
+                  <p class="step">2단계</p>
+                  <h2 id="requiredTitle">필수 입력</h2>
+                </div>
+                <div class="heading-actions">
+                  <button class="mini-button" id="sampleButton" type="button">샘플 입력</button>
+                  <span class="hint">* 표시는 필수</span>
+                </div>
+              </div>
+              <div id="requiredFields" class="field-group" aria-labelledby="requiredTitle"></div>
+
+              <section id="conditionalRequiredSection" class="conditional-required-card" hidden aria-labelledby="conditionalRequiredTitle">
+                <div class="conditional-required-card__header">
+                  <div>
+                    <h3 id="conditionalRequiredTitle">선택한 유형의 추가 필수 입력</h3>
+                    <p>분석 유형이나 세부 옵션에 따라 반드시 필요한 정보입니다.</p>
+                  </div>
+                  <span class="required-pill">필수</span>
+                </div>
+                <div id="conditionalRequiredFields" class="field-group conditional-required-fields"></div>
+              </section>
+
+              <details class="optional-card" open>
+                <summary>
+                  <span>추가하면 좋은 선택 입력</span>
+                  <small>입력할수록 AI가 추측하지 않습니다</small>
+                </summary>
+                <div id="optionalFields" class="field-group optional-fields"></div>
+              </details>
+            </section>
+
+            <section class="global-options" aria-labelledby="globalOptionsTitle">
+              <div class="section-heading compact">
+                <p class="step">3단계</p>
+                <h2 id="globalOptionsTitle">공통 품질 옵션</h2>
+              </div>
+
+              <div class="field-grid two-columns">
+                <div class="form-field" data-field-id="clarityLevel">
+                  <label class="field-label with-chip" for="clarityLevel"><span>설명 수준</span><em id="clarityLevelRecommended" class="recommend-chip" hidden></em></label>
+                  <select id="clarityLevel" name="clarityLevel"></select>
+                  <p class="field-error" id="clarityLevelError"></p>
+                </div>
+
+                <div class="form-field" data-field-id="customClarity" data-common-dependent="clarityLevel:custom" hidden>
+                  <label class="field-label" for="customClarity">설명 수준 직접 입력 <span aria-hidden="true">*</span></label>
+                  <input
+                    id="customClarity"
+                    name="customClarity"
+                    type="text"
+                    placeholder="예: 40대 비개발자도 이해할 수 있게, 표와 예시 중심으로"
+                  />
+                  <p class="field-error" id="customClarityError"></p>
+                </div>
+
+                <div class="form-field">
+                  <label class="field-label with-chip" for="responseDepth"><span>답변 깊이</span><em id="responseDepthRecommended" class="recommend-chip" hidden></em></label>
+                  <select id="responseDepth" name="responseDepth"></select>
+                </div>
+
+                <div class="form-field">
+                  <label class="field-label with-chip" for="promptStrength"><span>프롬프트 강도</span><em id="promptStrengthRecommended" class="recommend-chip" hidden></em></label>
+                  <select id="promptStrength" name="promptStrength"></select>
+                </div>
+
+                <div class="form-field">
+                  <label class="field-label with-chip" for="personaMode"><span>인격 토론 방식</span><em id="personaModeRecommended" class="recommend-chip" hidden></em></label>
+                  <select id="personaMode" name="personaMode"></select>
+                </div>
+
+                <div class="form-field">
+                  <label class="field-label with-chip" for="toneMode"><span>답변 톤/태도</span><em id="toneModeRecommended" class="recommend-chip" hidden></em></label>
+                  <select id="toneMode" name="toneMode"></select>
+                </div>
+
+                <div class="form-field" data-field-id="outputFormatMode">
+                  <label class="field-label with-chip" for="outputFormatMode"><span>최종 답변 형식</span><em id="outputFormatModeRecommended" class="recommend-chip" hidden></em></label>
+                  <select id="outputFormatMode" name="outputFormatMode"></select>
+                  <p class="field-error" id="outputFormatModeError"></p>
+                </div>
+
+                <div class="form-field full" data-field-id="customOutputFormat" data-common-dependent="outputFormatMode:custom" hidden>
+                  <label class="field-label" for="customOutputFormat">최종 답변 형식 직접 입력 <span aria-hidden="true">*</span></label>
+                  <textarea
+                    id="customOutputFormat"
+                    name="customOutputFormat"
+                    rows="3"
+                    placeholder="예: 1. 한 줄 결론 2. 표 비교 3. 실행 순서 4. 리스크 5. 다음 행동"
+                  ></textarea>
+                  <p class="field-error" id="customOutputFormatError"></p>
+                </div>
+
+                <div class="form-field">
+                  <label class="field-label" for="clarityNote">설명 수준 추가 요청</label>
+                  <input id="clarityNote" name="clarityNote" type="text" placeholder="예: 용어 정의는 쉽게, 결론은 전문가 기준으로" />
+                </div>
+
+                <div class="form-field">
+                  <label class="field-label" for="responseDepthNote">답변 깊이 추가 요청</label>
+                  <input id="responseDepthNote" name="responseDepthNote" type="text" placeholder="예: 표는 짧게, 실행 순서는 자세히" />
+                </div>
+
+                <div class="form-field">
+                  <label class="field-label" for="promptStrengthNote">프롬프트 강도 추가 요청</label>
+                  <input id="promptStrengthNote" name="promptStrengthNote" type="text" placeholder="예: 빠진 조건을 먼저 체크한 뒤 본문 작성" />
+                </div>
+
+                <div class="form-field">
+                  <label class="field-label" for="personaModeNote">인격 토론 추가 요청</label>
+                  <input id="personaModeNote" name="personaModeNote" type="text" placeholder="예: 검색은 토론을 줄이고 팩트체크 중심으로" />
+                </div>
+
+                <div class="form-field">
+                  <label class="field-label" for="toneModeNote">답변 톤/태도 추가 요청</label>
+                  <input id="toneModeNote" name="toneModeNote" type="text" placeholder="예: 냉정하게 말하되 실행 순서는 친절하게" />
+                </div>
+
+                <div class="form-field">
+                  <label class="field-label" for="outputFormatNote">최종 답변 형식 추가 요청</label>
+                  <input id="outputFormatNote" name="outputFormatNote" type="text" placeholder="예: 마지막에 지금 할 일 3개를 따로 정리" />
+                </div>
+              </div>
+
+              <div class="switch-list">
+                <label class="switch-row">
+                  <input id="redTeamMode" name="redTeamMode" type="checkbox" />
+                  <span>
+                    <strong>레드팀 우선 검토</strong>
+                    <small>요구가 합당한지 먼저 검토하고 약점·위험·개선안을 제시합니다.</small>
+                  </span>
+                </label>
+                <label class="switch-row">
+                  <input id="askMoreQuestions" name="askMoreQuestions" type="checkbox" checked />
+                  <span>
+                    <strong>정보 부족 시 추가 질문</strong>
+                    <small>필수 정보가 부족하면 충분한 정보를 얻을 때까지 질문합니다.</small>
+                  </span>
+                </label>
+                <label class="switch-row">
+                  <input id="includeSelfReview" name="includeSelfReview" type="checkbox" checked />
+                  <span>
+                    <strong>자기 검증 체크리스트 포함</strong>
+                    <small>빠진 조건, 모순, 리스크, 다음 행동을 검토합니다.</small>
+                  </span>
+                </label>
+                <label class="switch-row">
+                  <input id="splitIfLong" name="splitIfLong" type="checkbox" checked />
+                  <span>
+                    <strong>큰 작업은 단계 분리</strong>
+                    <small>완료 단계와 남은 단계를 리스트로 알려달라고 요청합니다.</small>
+                  </span>
+                </label>
+                <label class="switch-row">
+                  <input id="includeExamples" name="includeExamples" type="checkbox" checked />
+                  <span>
+                    <strong>좋은 예시/나쁜 예시 활용</strong>
+                    <small>품질 경계를 분명히 하기 위해 예시 기반 검토를 요청합니다.</small>
+                  </span>
+                </label>
+                <label class="switch-row">
+                  <input id="requireEvidence" name="requireEvidence" type="checkbox" checked />
+                  <span>
+                    <strong>근거·출처·확인 방법 요청</strong>
+                    <small>사실과 추론을 구분하고 확인 경로를 요구합니다.</small>
+                  </span>
+                </label>
+              </div>
+            </section>
+
+            <div class="button-row">
+              <button class="primary-button" type="submit">프롬프트 변환</button>
+              <button class="ghost-button" id="resetButton" type="button">초기화</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel result-panel" aria-labelledby="resultTitle">
+          <div class="section-heading split-heading">
+            <div>
+              <p class="step">4단계</p>
+              <h2 id="resultTitle">변환된 프롬프트</h2>
+            </div>
+            <span id="promptMeta" class="hint">아직 생성 전</span>
+          </div>
+
+          <textarea
+            id="resultPrompt"
+            class="result-output"
+            spellcheck="false"
+            placeholder="왼쪽에서 조건을 입력하고 ‘프롬프트 변환’을 눌러주세요."
+          ></textarea>
+
+          <div class="button-row result-actions">
+            <button class="primary-button" id="copyButton" type="button">클립보드 복사</button>
+            <button class="ghost-button" id="selectButton" type="button">전체 선택</button>
+          </div>
+          <p id="toast" class="toast" role="status" aria-live="polite"></p>
+
+          <aside class="guide-card">
+            <h3>생성 규칙</h3>
+            <ul>
+              <li>모든 프롬프트는 역할, 목표, 맥락, 입력 자료, 기준, 금지사항, 검토 방식을 포함합니다.</li>
+              <li>각 유형마다 서로 다른 인격체가 의견을 내고 최종 결정권자가 정리합니다.</li>
+              <li>투자/재테크, 마케팅, 리서치/분석, 재미/생활/기타 유형은 별도 역할과 출력 형식을 사용합니다.</li>
+              <li>샘플 입력은 토글 방식입니다. 다시 누르면 샘플값만 지웁니다.</li>
+              <li>거짓 정보, 근거 없는 단정, 편견에 의존하지 않도록 방어 문구를 포함합니다.</li>
+              <li>내부 추론 전문 대신 핵심 근거와 판단 단계만 정리하도록 요청합니다.</li>
+            </ul>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="./assets/js/main.js"></script>
+  </body>
+</html>
