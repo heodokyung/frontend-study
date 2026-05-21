@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animate Preview</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f3e8;
+      --surface: rgba(255, 255, 255, 0.78);
+      --surface-strong: #fffdf7;
+      --text: #202124;
+      --muted: #6f6a5d;
+      --line: rgba(34, 31, 25, 0.12);
+      --primary: #167a63;
+      --primary-strong: #0f624f;
+      --shadow: 0 22px 60px rgba(32, 24, 8, 0.14);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--text);
+      font-family:
+        Pretendard,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(38, 160, 123, 0.16), transparent 34rem),
+        linear-gradient(135deg, #fbf7e9 0%, #f3ecdb 48%, #eaf5ee 100%);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 42px 0 48px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      padding: 7px 12px;
+      color: var(--primary-strong);
+      font-size: 13px;
+      font-weight: 700;
+      background: rgba(22, 122, 99, 0.1);
+      border: 1px solid rgba(22, 122, 99, 0.16);
+      border-radius: 999px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 58px);
+      line-height: 1.04;
+      letter-spacing: -0.06em;
+    }
+
+    .lead {
+      max-width: 720px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.75;
+      word-break: keep-all;
+    }
+
+    .meta-card {
+      min-width: 220px;
+      padding: 20px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .meta-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .meta-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .panel,
+    .preview {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .panel {
+      position: sticky;
+      top: 24px;
+      padding: 18px;
+    }
+
+    .panel-title {
+      margin: 0 0 12px;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .effect-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .effect-button {
+      width: 100%;
+      padding: 15px 16px;
+      color: var(--text);
+      text-align: left;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .effect-button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(22, 122, 99, 0.32);
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .effect-button[aria-pressed="true"] {
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+      border-color: transparent;
+    }
+
+    .effect-button strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 15px;
+    }
+
+    .effect-button span {
+      display: block;
+      color: inherit;
+      opacity: 0.76;
+      font-size: 13px;
+      line-height: 1.5;
+      word-break: keep-all;
+    }
+
+    .hint {
+      margin: 16px 2px 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+      word-break: keep-all;
+    }
+
+    .preview {
+      overflow: hidden;
+    }
+
+    .preview-header {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .preview-title {
+      min-width: 0;
+    }
+
+    .preview-title h2 {
+      margin: 0 0 4px;
+      font-size: 20px;
+      letter-spacing: -0.03em;
+    }
+
+    .preview-title p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      word-break: keep-all;
+    }
+
+    .preview-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .link-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 13px;
+      color: var(--primary-strong);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      background: rgba(22, 122, 99, 0.09);
+      border: 1px solid rgba(22, 122, 99, 0.16);
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .stage {
+      position: relative;
+      height: min(680px, 70vh);
+      min-height: 460px;
+      background: var(--surface-strong);
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #fdf9e6;
+    }
+
+    @media (max-width: 860px) {
+      .hero,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        position: static;
+      }
+
+      .stage {
+        height: 560px;
+        min-height: 520px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        width: min(100% - 24px, 1180px);
+        padding-top: 24px;
+      }
+
+      .preview-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .preview-actions {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Animation Study</p>
+        <h1>재료가 쌓이는 모션을 한 화면에서 확인하기</h1>
+        <p class="lead">
+          여러 버전으로 나누어 만든 재료 낙하 애니메이션을 바로 비교할 수 있도록 정리했습니다.
+          버튼을 누르면 아래 미리보기 영역에서 해당 효과가 실행됩니다.
+        </p>
+      </div>
+      <aside class="meta-card" aria-label="문서 정보">
+        <strong>Preview Index</strong>
+        <span>HTML / CSS Animation</span>
+        <span>반복 확인이 쉽도록 iframe 기반으로 구성</span>
+      </aside>
+    </header>
+
+    <section class="layout" aria-label="애니메이션 미리보기">
+      <aside class="panel">
+        <h2 class="panel-title">효과 선택</h2>
+        <div class="effect-list" id="effectList"></div>
+        <p class="hint">
+          기존 예제 파일은 그대로 두고, 이 index 화면에서 각 버전을 불러와 확인하는 방식입니다.
+          모바일 비율로 만든 예제는 브라우저 폭에 따라 다르게 보일 수 있습니다.
+        </p>
+      </aside>
+
+      <section class="preview">
+        <div class="preview-header">
+          <div class="preview-title">
+            <h2 id="previewTitle">기본 재료 낙하 모션</h2>
+            <p id="previewDescription">JavaScript로 이미지를 생성한 뒤, 제목 위치에서 그릇 방향으로 떨어뜨리는 초기 버전입니다.</p>
+          </div>
+          <div class="preview-actions">
+            <button class="link-button" type="button" id="reloadButton">다시 실행</button>
+            <a class="link-button" href="animate.html" target="_blank" rel="noreferrer" id="openButton">새 창으로 보기</a>
+          </div>
+        </div>
+        <div class="stage">
+          <iframe id="previewFrame" src="animate.html" title="기본 재료 낙하 모션 미리보기"></iframe>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const effects = [
+      {
+        title: '기본 재료 낙하 모션',
+        file: 'animate.html',
+        description: 'JavaScript로 재료 이미지를 생성한 뒤, 제목 위치에서 그릇 방향으로 떨어뜨리는 초기 버전입니다.',
+      },
+      {
+        title: '마크업 기반 재료 낙하 모션',
+        file: 'animate2.html',
+        description: '재료 이미지를 HTML에 미리 배치하고, CSS 변수와 지연 시간을 이용해 순차적으로 떨어뜨리는 버전입니다.',
+      },
+      {
+        title: '이벤트 비주얼형 완성 모션',
+        file: 'animate3.html',
+        description: '실제 이벤트 비주얼에 가까운 이미지 소스와 그릇 퍼짐 효과를 함께 적용한 확장 버전입니다.',
+      },
+    ];
+
+    const effectList = document.querySelector('#effectList');
+    const previewFrame = document.querySelector('#previewFrame');
+    const previewTitle = document.querySelector('#previewTitle');
+    const previewDescription = document.querySelector('#previewDescription');
+    const reloadButton = document.querySelector('#reloadButton');
+    const openButton = document.querySelector('#openButton');
+
+    function setEffect(effect, selectedButton) {
+      previewTitle.textContent = effect.title;
+      previewDescription.textContent = effect.description;
+      previewFrame.src = `${effect.file}?t=${Date.now()}`;
+      previewFrame.title = `${effect.title} 미리보기`;
+      openButton.href = effect.file;
+
+      document.querySelectorAll('.effect-button').forEach((button) => {
+        button.setAttribute('aria-pressed', button === selectedButton ? 'true' : 'false');
+      });
+    }
+
+    effects.forEach((effect, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'effect-button';
+      button.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
+      button.innerHTML = `<strong>${effect.title}</strong><span>${effect.description}</span>`;
+      button.addEventListener('click', () => setEffect(effect, button));
+      effectList.appendChild(button);
+    });
+
+    reloadButton.addEventListener('click', () => {
+      const currentSrc = previewFrame.getAttribute('src').split('?')[0];
+      previewFrame.src = `${currentSrc}?t=${Date.now()}`;
+    });
+  </script>
+</body>
+</html>
