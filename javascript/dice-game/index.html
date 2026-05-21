@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dice Game Preview</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --surface: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --accent: #2563eb;
+      --accent-dark: #1d4ed8;
+      --shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.13), transparent 32rem),
+        linear-gradient(180deg, #f9fafb 0%, var(--bg) 100%);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 48px 0;
+    }
+
+    .hero {
+      padding: 36px;
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.76);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 54px);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .lead {
+      max-width: 760px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.75;
+    }
+
+    .notice {
+      margin-top: 18px;
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 360px minmax(0, 1fr);
+      gap: 22px;
+      margin-top: 24px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+    }
+
+    .demo-list {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+    }
+
+    .demo-button {
+      width: 100%;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .demo-button:hover {
+      transform: translateY(-2px);
+      border-color: #bfdbfe;
+      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.1);
+    }
+
+    .demo-button.is-active {
+      border-color: var(--accent);
+      background: #eff6ff;
+    }
+
+    .demo-title {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .demo-desc {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .viewer-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .viewer-title {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .viewer-desc {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .viewer-actions {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .action-link,
+    .action-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .action-link.primary {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .preview-frame {
+      display: block;
+      width: 100%;
+      height: 620px;
+      border: 0;
+      background: #fff;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    @media (max-width: 920px) {
+      .page {
+        width: min(100% - 20px, 720px);
+        padding: 24px 0;
+      }
+
+      .hero {
+        padding: 26px 22px;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .viewer-header {
+        flex-direction: column;
+      }
+
+      .viewer-actions {
+        flex-wrap: wrap;
+      }
+
+      .preview-frame {
+        height: 560px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="eyebrow">🎲 JavaScript Dice Study</span>
+      <h1>주사위 게임 실습 모음</h1>
+      <p class="lead">
+        주사위 UI, 랜덤 값 처리, 애니메이션, 이동판 이벤트, 간단한 게임 흐름을 연습했던 파일들을
+        한 화면에서 바로 확인할 수 있도록 정리했습니다.
+      </p>
+      <p class="notice">
+        왼쪽 버튼을 누르면 아래 미리보기 영역에 해당 예제가 열립니다. 일부 예제는 jQuery CDN을 사용하므로,
+        오프라인 환경에서는 동작이 제한될 수 있습니다.
+      </p>
+    </section>
+
+    <section class="layout" aria-label="주사위 예제 미리보기">
+      <aside class="panel">
+        <div class="demo-list" id="demoList"></div>
+      </aside>
+
+      <section class="panel">
+        <div class="viewer-header">
+          <div>
+            <h2 class="viewer-title" id="viewerTitle">Craps 스타일 주사위 게임</h2>
+            <p class="viewer-desc" id="viewerDesc">
+              Come Out Roll과 Point Roll 흐름을 가진 주사위 게임 예제입니다.
+            </p>
+          </div>
+          <div class="viewer-actions">
+            <a class="action-link primary" id="openLink" href="dice1.html" target="_blank" rel="noopener noreferrer">새 창으로 보기</a>
+            <button class="action-button" type="button" id="reloadButton">다시 불러오기</button>
+          </div>
+        </div>
+        <iframe
+          class="preview-frame"
+          id="previewFrame"
+          src="dice1.html"
+          title="선택한 주사위 예제 미리보기"
+        ></iframe>
+      </section>
+    </section>
+
+    <p class="footer-note">
+      정리 목적의 미리보기 페이지입니다. 기존 실습 파일은 수정하지 않고, iframe으로 불러와 비교할 수 있게 구성했습니다.
+    </p>
+  </main>
+
+  <script>
+    const demos = [
+      {
+        file: 'dice1.html',
+        title: 'Craps 스타일 주사위 게임',
+        desc: 'Come Out Roll과 Point Roll 흐름을 가진 주사위 게임 예제입니다.',
+      },
+      {
+        file: 'dice2.html',
+        title: '랜덤 주사위 + 이동판 기본형',
+        desc: '주사위를 굴린 값에 따라 위치가 이동하고 결과 팝업을 보여주는 이벤트형 예제입니다.',
+      },
+      {
+        file: 'dice2_1.html',
+        title: '이동판 진행형 예제',
+        desc: '기본 이동판 구조를 바탕으로 마커 이동과 완료 흐름을 조금 더 다듬은 버전입니다.',
+      },
+      {
+        file: 'dice2_2.html',
+        title: '이동 타이밍 개선 버전',
+        desc: '주사위 애니메이션과 이동 시작 타이밍을 조정해 이벤트 느낌을 강화한 버전입니다.',
+      },
+      {
+        file: 'dice2_backup.html',
+        title: '초기 백업 버전',
+        desc: '이동판 주사위 이벤트의 초기 구현 흐름을 확인할 수 있는 백업 파일입니다.',
+      },
+      {
+        file: 'dice3.html',
+        title: '3D 주사위 회전 예제',
+        desc: 'CSS 3D transform을 활용해 두 개의 주사위를 회전시키는 실습 예제입니다.',
+      },
+    ]
+
+    const demoList = document.querySelector('#demoList')
+    const previewFrame = document.querySelector('#previewFrame')
+    const viewerTitle = document.querySelector('#viewerTitle')
+    const viewerDesc = document.querySelector('#viewerDesc')
+    const openLink = document.querySelector('#openLink')
+    const reloadButton = document.querySelector('#reloadButton')
+
+    function renderButtons() {
+      demoList.innerHTML = demos.map((demo, index) => `
+        <button class="demo-button${index === 0 ? ' is-active' : ''}" type="button" data-index="${index}">
+          <span class="demo-title">${demo.title}</span>
+          <span class="demo-desc">${demo.desc}</span>
+        </button>
+      `).join('')
+    }
+
+    function selectDemo(index) {
+      const demo = demos[index]
+      if (!demo) return
+
+      viewerTitle.textContent = demo.title
+      viewerDesc.textContent = demo.desc
+      previewFrame.src = demo.file
+      openLink.href = demo.file
+
+      document.querySelectorAll('.demo-button').forEach((button) => {
+        button.classList.toggle('is-active', Number(button.dataset.index) === index)
+      })
+    }
+
+    demoList.addEventListener('click', (event) => {
+      const button = event.target.closest('.demo-button')
+      if (!button) return
+
+      selectDemo(Number(button.dataset.index))
+    })
+
+    reloadButton.addEventListener('click', () => {
+      previewFrame.src = previewFrame.src
+    })
+
+    renderButtons()
+  </script>
+</body>
+</html>
