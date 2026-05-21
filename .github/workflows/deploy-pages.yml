@@ -104,10 +104,9 @@ jobs:
             echo "Copied $project_dir/$build_output -> $deploy_dir"
           }
 
-          build_project "react/react-netflix"
-          build_project "react/react-movie-list"
-          build_project "react/react-animation"
+          build_project "react/react-movie-list"          
           build_project "react/react-coin-list"
+          build_project "react/react-animation"
           build_project "react/react-lottery"
 
       - name: Configure GitHub Pages
