@@ -39,16 +39,16 @@
 
 ### JavaScript
 
-| 폴더 | 설명 |
-|---|---|
+| 폴더 | 바로가기 |설명 |
+|---|---|---|
 | [`폴더 바로가기(javascript/ai-prompt)`](./javascript/ai-prompt/) | [`구현 화면 바로가기`](https://heodokyung.github.io/frontend-study/javascript/ai-prompt/) | 목적에 맞는 AI 프롬프트로 변환하는 도구 |
 | [`폴더 바로가기(javascript/dice-game)`](./javascript/dice-game/) | [`구현 화면 바로가기`](https://heodokyung.github.io/frontend-study/javascript/dice-game/) | 주사위 게임을 단계별로 만들며 DOM 조작과 이벤트를 적용 |
 | [`폴더 바로가기9javascript/draw-paint-js)`](./javascript/draw-paint-js/) | [`구현 화면 바로가기`](https://heodokyung.github.io/frontend-study/javascript/draw-paint-js/) | Canvas/DOM을 이옹하여 그림판을 구현 |
 
 ### React
 
-| 폴더 | 설명 |
-|---|---|
+| 폴더 | 바로가기 |설명 |
+|---|---|---|
 | [`폴더 바로가기(/react-netflix)`](https://github.com/heodokyung/react-netflix) | [`구현 화면 바로가기`](https://heodokyung.github.io/react-netflix/) | React로 구현한 Netflix 클론 사이트 |
 | [`폴더 바로가기(/react-coin-list)`](https://github.com/heodokyung/react-coin-list) | [`구현 화면 바로가기`](https://heodokyung.github.io/react-coin-list/) | 코인 API를 연동하여 데이터, 리스트 렌더링, 상태 처리를 구현 |
 | [`폴더 바로가기(/react-movie-list)`](https://github.com/heodokyung/react-movie-list) | [`구현 화면 바로가기`](https://heodokyung.github.io/react-movie-list/) | 영화 목록 UI와 데이터 렌더링을 구현 |
@@ -58,8 +58,8 @@
 
 ### Svelte
 
-| 폴더 | 설명 |
-|---|---|
+| 폴더 | 바로가기 |설명 |
+|---|---|---|
 | [`폴더 바로가기(/svelte-todo)`](https://github.com/heodokyung/svelte-todo/) | [`구현 화면 바로가기`](https://heodokyung.github.io/svelte-todo/) | Svelte 기본 문법과 상태 처리를 익히기 위한 Todo 예제 |
 
 
