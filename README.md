@@ -32,35 +32,35 @@
 
 | 폴더 | 설명 |
 |---|---|
-| [`animation/css-effect`](./animation/css-effect/), [`바로가기`](https://heodokyung.github.io/frontend-study/animation/css-effect/) | 눈, 폭죽 CSS/JavaScript 기반 시각 효과 |
-| [`animation/animate`](./animation/animate/)  [`바로가기`](https://heodokyung.github.io/frontend-study/animation/animate/)| HTML 파일 중심의 모션 애니메이션 |
-| [`animation/animate-css`](./animation/animate-css/) | `animate.css` animate 라이브러리 구조와 사용 방식 참고 |
-| [`animation/aos`](./animation/aos/) | 스크롤 애니메이션 라이브러리 AOS 사용 방식 참고 |
+| [`폴더 바로가기: animation/css-effect`](./animation/css-effect/), [`구현 화면 바로가기`](https://heodokyung.github.io/frontend-study/animation/css-effect/) | 눈, 폭죽 CSS/JavaScript 기반 시각 효과 |
+| [`폴더 바로가기: animation/animate`](./animation/animate/)  [`구현 화면 바로가기`](https://heodokyung.github.io/frontend-study/animation/animate/)| HTML 파일 중심의 모션 애니메이션 |
+| [`폴더 바로가기: animation/animate-css`](./animation/animate-css/) | `animate.css` animate 라이브러리 구조와 사용 방식 참고 |
+| [`폴더 바로가기: animation/aos`](./animation/aos/) | 스크롤 애니메이션 라이브러리 AOS 사용 방식 참고 |
 
 ### JavaScript
 
 | 폴더 | 설명 |
 |---|---|
-| [`javascript/ai-prompt`](./javascript/ai-prompt/), [`바로가기`](https://heodokyung.github.io/frontend-study/javascript/ai-prompt/) | 목적에 맞는 AI 프롬프트로 변환하는 도구 |
-| [`javascript/dice-game`](./javascript/dice-game/), [`바로가기`](https://heodokyung.github.io/frontend-study/javascript/dice-game/) | 주사위 게임을 단계별로 만들며 DOM 조작과 이벤트를 적용 |
-| [`javascript/draw-paint-js`](./javascript/draw-paint-js/), [`바로가기`](https://heodokyung.github.io/frontend-study/javascript/draw-paint-js/) | Canvas/DOM을 이옹하여 그림판을 구현 |
+| [`폴더 바로가기: javascript/ai-prompt`](./javascript/ai-prompt/), [`구현 화면 바로가기`](https://heodokyung.github.io/frontend-study/javascript/ai-prompt/) | 목적에 맞는 AI 프롬프트로 변환하는 도구 |
+| [`폴더 바로가기: javascript/dice-game`](./javascript/dice-game/), [`구현 화면 바로가기`](https://heodokyung.github.io/frontend-study/javascript/dice-game/) | 주사위 게임을 단계별로 만들며 DOM 조작과 이벤트를 적용 |
+| [`폴더 바로가기: javascript/draw-paint-js`](./javascript/draw-paint-js/), [`바로가기`](https://heodokyung.github.io/frontend-study/javascript/draw-paint-js/) | Canvas/DOM을 이옹하여 그림판을 구현 |
 
 ### React
 
 | 폴더 | 설명 |
 |---|---|
-| [`/react-netflix`](https://github.com/heodokyung/react-netflix),  [`바로가기`](https://heodokyung.github.io/react-netflix/) | React로 구현한 Netflix 클론 사이트 |
-| [`/react-coin-list`](https://github.com/heodokyung/react-coin-list),  [`바로가기`](https://heodokyung.github.io/react-coin-list/) | 코인 API를 연동하여 데이터, 리스트 렌더링, 상태 처리를 구현 |
-| [`/react-movie-list`](https://github.com/heodokyung/react-movie-list),  [`바로가기`](https://heodokyung.github.io/react-movie-list/) | 영화 목록 UI와 데이터 렌더링을 구현 |
-| [`/react-animation`](https://github.com/heodokyung/react-animation),  [`바로가기`](https://heodokyung.github.io/react-animation/) | React에서 애니메이션을 다루기 위한 실습과 정리 |
-| [`/react-lottery`](https://github.com/heodokyung/react-lottery),  [`바로가기`](https://heodokyung.github.io/react-lottery/) | 로또 번호 생성 기능을 React로 구현한 토이 프로젝트 |
+| [`폴더 바로가기: /react-netflix`](https://github.com/heodokyung/react-netflix),  [`구현 화면 바로가기`](https://heodokyung.github.io/react-netflix/) | React로 구현한 Netflix 클론 사이트 |
+| [`폴더 바로가기: /react-coin-list`](https://github.com/heodokyung/react-coin-list),  [`구현 화면 바로가기`](https://heodokyung.github.io/react-coin-list/) | 코인 API를 연동하여 데이터, 리스트 렌더링, 상태 처리를 구현 |
+| [`폴더 바로가기: /react-movie-list`](https://github.com/heodokyung/react-movie-list),  [`구현 화면 바로가기`](https://heodokyung.github.io/react-movie-list/) | 영화 목록 UI와 데이터 렌더링을 구현 |
+| [`폴더 바로가기: /react-animation`](https://github.com/heodokyung/react-animation),  [`구현 화면 바로가기`](https://heodokyung.github.io/react-animation/) | React에서 애니메이션을 다루기 위한 실습과 정리 |
+| [`폴더 바로가기: /react-lottery`](https://github.com/heodokyung/react-lottery),  [`구현 화면 바로가기`](https://heodokyung.github.io/react-lottery/) | 로또 번호 생성 기능을 React로 구현한 토이 프로젝트 |
 
 
 ### Svelte
 
 | 폴더 | 설명 |
 |---|---|
-| [`/svelte-todo`](https://github.com/heodokyung/svelte-todo/), [`바로가기`](https://heodokyung.github.io/svelte-todo/) | Svelte 기본 문법과 상태 처리를 익히기 위한 Todo 예제 |
+| [`폴더 바로가기: /svelte-todo`](https://github.com/heodokyung/svelte-todo/), [`구현 화면 바로가기`](https://heodokyung.github.io/svelte-todo/) | Svelte 기본 문법과 상태 처리를 익히기 위한 Todo 예제 |
 
 
 ---
