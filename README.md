@@ -6,6 +6,7 @@
 
 `HTML/CSS`부터 `JavaScript`, `React`, `Svelte`, `Animation`까지  
 공부하면서 만든 예제와 실험 코드를 주제별로 모았습니다.
+`React`, `Svelte`는 배포와 레파지토리 관리를 위해 개별 프로젝트로 관리합니다.
 
 <br />
 
@@ -18,17 +19,10 @@
 
 ---
 
-## 이 저장소는
-
+## 설명
 처음 배울 때 만든 코드는 나중에 보면 부족한 부분이 많습니다.  
 그래도 그 코드를 지우지 않고 정리해두면, 나중에 다시 봤을 때 “그때 무엇을 이해하려고 했는지”가 보입니다.
-
-이 저장소는 완성된 포트폴리오라기보다, 프론트엔드를 공부하며 쌓아온 작은 예제들을 모아둔 학습 노트에 가깝습니다.
-
-- 예전에 만든 작은 프로젝트를 한곳에서 다시 찾기 위해
-- 비슷한 성격의 레포지토리를 주제별 폴더로 정리하기 위해
-- 공부한 흔적을 버리지 않고 현재 기준으로 다시 보기 위해
-- 나중에 실무나 개인 프로젝트에서 참고할 코드 조각을 남기기 위해
+이 저장소는 프론트엔드를 공부하며 공부한 기록과 학습 노트 형식을 가집니다. 
 
 ---
 
@@ -38,10 +32,10 @@
 
 | 폴더 | 설명 |
 |---|---|
-| [`animation/css-effect`](./animation/css-effect/), [`바로가기`](https://heodokyung.github.io/frontend-study/animation/css-effect/) | 눈, 불꽃 같은 CSS/JavaScript 기반 시각 효과 |
-| [`animation/animate`](./animation/animate/)  [`바로가기`](https://heodokyung.github.io/frontend-study/animation/animate/)| HTML 파일 중심의 기본 애니메이션 실습 |
-| [`animation/animate-css`](./animation/animate-css/) | `animate.css` 라이브러리 구조와 사용 방식 참고 |
-| [`animation/aos`](./animation/aos/) | 스크롤 애니메이션 라이브러리 AOS 구조 참고 |
+| [`animation/css-effect`](./animation/css-effect/), [`바로가기`](https://heodokyung.github.io/frontend-study/animation/css-effect/) | 눈, 폭죽 CSS/JavaScript 기반 시각 효과 |
+| [`animation/animate`](./animation/animate/)  [`바로가기`](https://heodokyung.github.io/frontend-study/animation/animate/)| HTML 파일 중심의 모션 애니메이션 |
+| [`animation/animate-css`](./animation/animate-css/) | `animate.css` animate 라이브러리 구조와 사용 방식 참고 |
+| [`animation/aos`](./animation/aos/) | 스크롤 애니메이션 라이브러리 AOS 사용 방식 참고 |
 
 ### JavaScript
 
@@ -55,18 +49,18 @@
 
 | 폴더 | 설명 |
 |---|---|
-| [`react/react-netflix`](./react/react-netflix/) | React로 구현한 Netflix 클론 사이트 |
-| [`react/react-coin-list`](./react/react-coin-list/) | 코인 API를 연동하여 데이터, 리스트 렌더링, 상태 처리를 구현 |
-| [`react/react-movie-list`](./react/react-movie-list/) | 영화 목록 UI와 데이터 렌더링을 구현 |
-| [`react/react-animation`](./react/react-animation/) | React에서 애니메이션을 다루기 위한 실습과 정리 |
-| [`react/react-lottery`](./react/react-lottery/) | 로또 번호 생성 기능을 React로 구현한 토이 프로젝트 |
+| [`/react-netflix`](https://github.com/heodokyung/react-netflix),  [`바로가기`](https://heodokyung.github.io/react-netflix/) | React로 구현한 Netflix 클론 사이트 |
+| [`/react-coin-list`](https://github.com/heodokyung/react-coin-list),  [`바로가기`](https://heodokyung.github.io/react-coin-list/) | 코인 API를 연동하여 데이터, 리스트 렌더링, 상태 처리를 구현 |
+| [`/react-movie-list`](https://github.com/heodokyung/react-movie-list),  [`바로가기`](https://heodokyung.github.io/react-movie-list/) | 영화 목록 UI와 데이터 렌더링을 구현 |
+| [`/react-animation`](https://github.com/heodokyung/react-animation),  [`바로가기`](https://heodokyung.github.io/react-animation/) | React에서 애니메이션을 다루기 위한 실습과 정리 |
+| [`/react-lottery`](https://github.com/heodokyung/react-lottery),  [`바로가기`](https://heodokyung.github.io/react-lottery/) | 로또 번호 생성 기능을 React로 구현한 토이 프로젝트 |
 
 
 ### Svelte
 
 | 폴더 | 설명 |
 |---|---|
-| [`svelte/svelte-todo`](./svelte/svelte-todo/) | Svelte 기본 문법과 상태 처리를 익히기 위한 Todo 예제 |
+| [`/svelte-todo`](https://github.com/heodokyung/svelte-todo/), [`바로가기`](https://heodokyung.github.io/svelte-todo/) | Svelte 기본 문법과 상태 처리를 익히기 위한 Todo 예제 |
 
 
 ---
@@ -80,19 +74,10 @@ frontend-study/
 │  ├─ animate/
 │  ├─ animate-css/
 │  └─ aos/
-├─ javascript/
-│  ├─ ai-prompt/
-│  ├─ dice-game/
-│  └─ draw-paint-js/
-├─ react/
-│  ├─ react-animation/
-│  ├─ react-coin-list/
-│  ├─ react-lottery/
-│  ├─ react-movie-list/
-│  └─ react-netflix/
-├─ svelte/
-│  └─ svelte-todo/
-└─ study-list/
+└─ javascript/
+   ├─ ai-prompt/
+   ├─ dice-game/
+   └─ draw-paint-js/
 ```
 
 ---
