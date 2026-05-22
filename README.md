@@ -30,12 +30,12 @@
 
 ### Animation
 
-| 폴더 | 설명 |
-|---|---|
+| 폴더 | 바로가기 |설명 |
+|---|---|---|
 | [`폴더 바로가기(animation/css-effect)`](./animation/css-effect/) | [`구현 화면 바로가기`](https://heodokyung.github.io/frontend-study/animation/css-effect/) | 눈, 폭죽 CSS/JavaScript 기반 시각 효과 |
-| [`폴더 바로가기(animation/animate)`](./animation/animate/) | [`구현 화면 바로가기`](https://heodokyung.github.io/frontend-study/animation/animate/)| HTML 파일 중심의 모션 애니메이션 |
-| [`폴더 바로가기(animation/animate-css)`](./animation/animate-css/) | `animate.css` animate 라이브러리 구조와 사용 방식 참고 |
-| [`폴더 바로가기(animation/aos)`](./animation/aos/) | 스크롤 애니메이션 라이브러리 AOS 사용 방식 참고 |
+| [`폴더 바로가기(animation/animate)`](./animation/animate/) | [`구현 화면 바로가기`](https://heodokyung.github.io/frontend-study/animation/animate/) | HTML 파일 중심의 모션 애니메이션 |
+| [`폴더 바로가기(animation/animate-css)`](./animation/animate-css/) | | `animate.css` animate 라이브러리 구조와 사용 방식 참고 |
+| [`폴더 바로가기(animation/aos)`](./animation/aos/) | | 스크롤 애니메이션 라이브러리 AOS 사용 방식 참고 |
 
 ### JavaScript
 
