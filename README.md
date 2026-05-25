@@ -84,6 +84,7 @@ React 프로젝트는 배포와 저장소 관리를 위해 별도 레포지토�
 | React Netflix | [Repo](https://github.com/heodokyung/react-netflix) | [Demo](https://heodokyung.github.io/react-netflix/) | React로 구현한 Netflix 클론 사이트 |
 | React Coin List | [Repo](https://github.com/heodokyung/react-coin-list) | [Demo](https://heodokyung.github.io/react-coin-list/) | 코인 API, 리스트 렌더링, 차트, 상태 처리 실습 |
 | React Movie List | [Repo](https://github.com/heodokyung/react-movie-list) | [Demo](https://heodokyung.github.io/react-movie-list/) | 영화 목록 UI와 상세 페이지 라우팅 실습 |
+| React Todo List | [Repo](https://github.com/heodokyung/react-todo-list) | [Demo](https://heodokyung.github.io/react-todo-list/) | React로 할일 목록(Todo)를 구현하고 칸반보드로 옮길 수 있는 UI 구현 |
 | React Animation | [Repo](https://github.com/heodokyung/react-animation) | [Demo](https://heodokyung.github.io/react-animation/) | React에서 애니메이션을 다루기 위한 실습과 정리 |
 | React Lottery | [Repo](https://github.com/heodokyung/react-lottery) | [Demo](https://heodokyung.github.io/react-lottery/) | 로또 번호 생성과 회차 조회 기능을 구현한 토이 프로젝트 |
 
